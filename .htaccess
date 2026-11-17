@@ -1,0 +1,85 @@
+# ==========================================================
+#  Pandit Krishna Astrology - security rules
+#  Site: panditkrishnaastrology.com (Hostinger, LiteSpeed/Apache)
+#  Upload to public_html and rename this file to:  .htaccess
+# ==========================================================
+
+# ---------- 1. Force HTTPS and one canonical address ----------
+RewriteEngine On
+
+# http://  ->  https://
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://panditkrishnaastrology.com%{REQUEST_URI} [L,R=301]
+
+# www.  ->  no www
+RewriteCond %{HTTP_HOST} ^www\.panditkrishnaastrology\.com$ [NC]
+RewriteRule ^ https://panditkrishnaastrology.com%{REQUEST_URI} [L,R=301]
+
+# ---------- 2. Security headers ----------
+<IfModule mod_headers.c>
+  # Browsers must always use HTTPS for 1 year
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+  # Stop other sites from embedding your pages (clickjacking)
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Stop browsers guessing file types
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Share only your domain name when visitors click outside links
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Switch off device features the site never uses
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+  # Content Security Policy: only load files from your own site + Google Fonts.
+  # 'unsafe-inline' kept for now so the language switcher and hover prices
+  # keep working; tighten once all scripts are moved into separate .js files.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://wa.me https://api.whatsapp.com; object-src 'none'; upgrade-insecure-requests"
+
+  # Hide server software details
+  Header always unset X-Powered-By
+  Header unset Server
+</IfModule>
+
+# ---------- 3. Block access to sensitive files ----------
+# No folder listings
+Options -Indexes
+
+# Hidden files (.htaccess, .git, .env, etc.)
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# Backups, logs, configs, scripts, source files
+<FilesMatch "\.(bak|old|orig|save|swp|tmp|log|ini|conf|env|sql|sh|py|zip|tar|gz|7z)$">
+  Require all denied
+</FilesMatch>
+
+# ---------- 4. Basic bad-request filtering ----------
+# Block common attack patterns in URLs
+RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} (\.\./|\.\.%2F) [NC,OR]
+RewriteCond %{QUERY_STRING} (union.*select|concat\(|base64_) [NC]
+RewriteRule ^ - [F,L]
+
+# Allow only normal request methods
+RewriteCond %{REQUEST_METHOD} !^(GET|HEAD|POST|OPTIONS)$
+RewriteRule ^ - [F,L]
+
+# ---------- 5. Custom error page ----------
+ErrorDocument 404 /404.html
+
+# ---------- 6. Caching ----------
+# Daily data must always be fresh; images and language files can be cached.
+<IfModule mod_headers.c>
+  <FilesMatch "^(index\.html|panchang-data\.js|blog-data\.js)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(png|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "^(i18n|lang-[a-z]{2})\.js$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+</IfModule>
