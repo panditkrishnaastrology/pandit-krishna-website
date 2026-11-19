@@ -272,6 +272,26 @@ footer{background:var(--violet-deep);color:var(--lav);padding-block:48px}
 .fee:hover .fee-m,.fee:focus-visible .fee-m,.fee.on .fee-m{visibility:hidden}
 .pk-method{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:40px}
 .pk-stale{padding:14px 18px;background:#FCEBD6;color:#6B3A00;border-radius:4px;font-size:15px}
+.syl{border-top:1px solid var(--line);padding-top:10px}
+.syl summary{cursor:pointer;color:var(--violet);font-weight:600;list-style:none;display:flex;align-items:center;gap:6px}
+.syl summary::-webkit-details-marker{display:none}
+.syl summary::after{content:"+";font-weight:400;font-size:1.15em;line-height:1}
+.syl[open] summary::after{content:"\2212"}
+.syl summary:focus-visible{outline:2px solid var(--violet);outline-offset:3px;border-radius:3px}
+.syl ol{margin:12px 0 8px;padding:0;list-style:none;counter-reset:m;display:flex;flex-direction:column;gap:10px}
+.syl li{counter-increment:m;display:grid;grid-template-columns:1.6em 1fr;gap:0 6px}
+.syl li::before{content:counter(m);color:var(--muted);font-size:.85em;padding-top:2px}
+.syl-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.syl-h b{font-weight:600}
+.syl-h span{color:var(--muted);font-size:.85em;white-space:nowrap}
+:root[lang=hi] .syl li::before{content:counter(m,devanagari)}
+:root[lang=mr] .syl li::before{content:counter(m,devanagari)}
+:root[lang=or] .syl li::before{content:counter(m,oriya)}
+:root[lang=bn] .syl li::before{content:counter(m,bengali)}
+:root[lang=gu] .syl li::before{content:counter(m,gujarati)}
+:root[lang=te] .syl li::before{content:counter(m,telugu)}
+:root[lang=kn] .syl li::before{content:counter(m,kannada)}
+.syl li p{grid-column:2;margin:2px 0 0;color:var(--muted);font-size:.9em;line-height:1.45}
 </style>
 </head>
 <body>
@@ -381,37 +401,43 @@ footer{background:var(--violet-deep);color:var(--lav);padding-block:48px}
 <p class="eyebrow">Level 1</p>
 <h3>Vedic Astrology — Basic</h3>
 <dl class="facts"><div><dt>Course fee</dt><dd>₹9,000</dd></div><div><dt>Duration</dt><dd>30 hours</dd></div><div><dt>Per hour</dt><dd>₹300</dd></div></dl>
-<p class="muted small">First class free · Syllabus coming soon</p>
+<p class="muted small">First class free</p>
+<details class="syl"><summary>View syllabus</summary><ol><li><div class="syl-h"><b>Foundations of Jyotish</b><span>3 hours</span></div><p>Vedangas, the sidereal zodiac, ayanamsa and the five limbs of Panchang</p></li><li><div class="syl-h"><b>The nine grahas</b><span>5 hours</span></div><p>Nature, karakas, friendship, dignity, combustion and retrogression</p></li><li><div class="syl-h"><b>The twelve rashis</b><span>4 hours</span></div><p>Element, quality, lordship and the nature of each sign</p></li><li><div class="syl-h"><b>The twelve bhavas</b><span>5 hours</span></div><p>Meaning of each house; kendra, trikona, dusthana and upachaya houses</p></li><li><div class="syl-h"><b>The 27 nakshatras</b><span>4 hours</span></div><p>Lords, padas and their use in reading a chart</p></li><li><div class="syl-h"><b>Casting the chart</b><span>4 hours</span></div><p>Lagna, the Rashi chart (D1) and the basics of Navamsa (D9)</p></li><li><div class="syl-h"><b>Vimshottari dasha</b><span>3 hours</span></div><p>Mahadasha and antardasha, and simple timing of events</p></li><li><div class="syl-h"><b>Chart reading practice</b><span>2 hours</span></div><p>Step-by-step reading of sample charts</p></li></ol><p class="muted small">Topics may be adjusted to the pace of the batch.</p></details>
 <a class="textlink" href="#book" data-service="Free class: Vedic Astrology — Basic">Book your free class</a>
 </article><article class="course">
 <p class="eyebrow">Level 2</p>
 <h3>Vedic Astrology — Advanced</h3>
 <dl class="facts"><div><dt>Course fee</dt><dd>₹15,000</dd></div><div><dt>Duration</dt><dd>30 hours</dd></div><div><dt>Per hour</dt><dd>₹500</dd></div></dl>
-<p class="muted small">First class free · Syllabus coming soon</p>
+<p class="muted small">First class free</p>
+<details class="syl"><summary>View syllabus</summary><ol><li><div class="syl-h"><b>Yogas</b><span>5 hours</span></div><p>Raja, Dhana, Pancha Mahapurusha, Viparita Raja and Neecha Bhanga yogas</p></li><li><div class="syl-h"><b>Divisional charts</b><span>5 hours</span></div><p>Shodashavarga; Navamsa, Dashamsa, Saptamsa and Dwadasamsa in depth; vargottama</p></li><li><div class="syl-h"><b>Planetary strength</b><span>5 hours</span></div><p>Shadbala, Ashtakavarga and avasthas</p></li><li><div class="syl-h"><b>Dasha in depth</b><span>4 hours</span></div><p>Pratyantar dasha, Yogini dasha and judging the results of a dasha</p></li><li><div class="syl-h"><b>Transits (Gochara)</b><span>4 hours</span></div><p>Sade Sati, Jupiter and Saturn transits, double transit and vedha</p></li><li><div class="syl-h"><b>Areas of life</b><span>4 hours</span></div><p>Career, wealth, education, marriage and children</p></li><li><div class="syl-h"><b>Case studies</b><span>3 hours</span></div><p>Full readings of real charts with event timing</p></li></ol><p class="muted small">Topics may be adjusted to the pace of the batch.</p></details>
 <a class="textlink" href="#book" data-service="Free class: Vedic Astrology — Advanced">Book your free class</a>
 </article><article class="course">
 <p class="eyebrow">Foundation</p>
 <h3>Panchang</h3>
 <dl class="facts"><div><dt>Course fee</dt><dd>₹6,000</dd></div><div><dt>Duration</dt><dd>10 hours</dd></div><div><dt>Per hour</dt><dd>₹600</dd></div></dl>
-<p class="muted small">First class free · Syllabus coming soon</p>
+<p class="muted small">First class free</p>
+<details class="syl"><summary>View syllabus</summary><ol><li><div class="syl-h"><b>Introduction to Panchang</b><span>1 hour</span></div><p>The five limbs; solar and lunar calendars</p></li><li><div class="syl-h"><b>Tithi and paksha</b><span>2 hours</span></div><p>Calculation of tithi, the 30 tithis, their nature and use</p></li><li><div class="syl-h"><b>Vara and hora</b><span>1 hour</span></div><p>Weekday lords and the planetary hours of the day and night</p></li><li><div class="syl-h"><b>Nakshatra</b><span>2 hours</span></div><p>The daily nakshatra and its use in choosing a time</p></li><li><div class="syl-h"><b>Yoga and karana</b><span>1 hour</span></div><p>The 27 yogas and the 11 karanas</p></li><li><div class="syl-h"><b>Months and seasons</b><span>1 hour</span></div><p>Lunar months, ritu, ayana, samvat and adhika masa</p></li><li><div class="syl-h"><b>Muhurta basics</b><span>2 hours</span></div><p>Rahu Kaal, Yamaganda, Gulika and Abhijit; reading a printed Panchang</p></li></ol><p class="muted small">Topics may be adjusted to the pace of the batch.</p></details>
 <a class="textlink" href="#book" data-service="Free class: Panchang">Book your free class</a>
 </article><article class="course">
 <p class="eyebrow">Nadi astrology</p>
 <h3>Bhrigu Nandi Nadi</h3>
 <dl class="facts"><div><dt>Course fee</dt><dd>₹18,000</dd></div><div><dt>Duration</dt><dd>30 hours</dd></div><div><dt>Per hour</dt><dd>₹600</dd></div></dl>
-<p class="muted small">First class free · Syllabus coming soon</p>
+<p class="muted small">First class free</p>
+<details class="syl"><summary>View syllabus</summary><ol><li><div class="syl-h"><b>Principles of Nadi</b><span>3 hours</span></div><p>How Bhrigu Nandi Nadi differs from the Parashari method</p></li><li><div class="syl-h"><b>Planetary relations</b><span>5 hours</span></div><p>Trines, and the 2nd, 12th and 7th from a planet, and how they combine</p></li><li><div class="syl-h"><b>Karakas in Nadi</b><span>5 hours</span></div><p>Significators of people and life matters: Jupiter, Venus, Saturn, Mars and others</p></li><li><div class="syl-h"><b>Reading combinations</b><span>5 hours</span></div><p>Conjunctions, retrograde planets and exchange of signs</p></li><li><div class="syl-h"><b>Event timing</b><span>6 hours</span></div><p>Timing events by the transits of Jupiter, Saturn, Rahu and Ketu</p></li><li><div class="syl-h"><b>Case studies</b><span>6 hours</span></div><p>Reading real charts and timing career, marriage and property events</p></li></ol><p class="muted small">Topics may be adjusted to the pace of the batch.</p></details>
 <a class="textlink" href="#book" data-service="Free class: Bhrigu Nandi Nadi">Book your free class</a>
 </article><article class="course">
 <p class="eyebrow">Horary astrology</p>
 <h3>Prasna Jyotish</h3>
 <dl class="facts"><div><dt>Course fee</dt><dd>₹12,000</dd></div><div><dt>Duration</dt><dd>15 hours</dd></div><div><dt>Per hour</dt><dd>₹800</dd></div></dl>
-<p class="muted small">First class free · Syllabus coming soon</p>
+<p class="muted small">First class free</p>
+<details class="syl"><summary>View syllabus</summary><ol><li><div class="syl-h"><b>Introduction to Prasna</b><span>2 hours</span></div><p>Purpose, rules for asking and the moment of the question</p></li><li><div class="syl-h"><b>Kasyapa Hora</b><span>4 hours</span></div><p>Principles and procedure of the Kasyapa Hora system</p></li><li><div class="syl-h"><b>Judging the question</b><span>3 hours</span></div><p>Significators, yes-or-no answers and the nature of the result</p></li><li><div class="syl-h"><b>Timing in Prasna</b><span>2 hours</span></div><p>When the matter asked about will happen</p></li><li><div class="syl-h"><b>Common questions</b><span>2 hours</span></div><p>Career, marriage, travel, property and lost articles</p></li><li><div class="syl-h"><b>Practice</b><span>2 hours</span></div><p>Answering real questions step by step</p></li></ol><p class="muted small">Topics may be adjusted to the pace of the batch.</p></details>
 <a class="textlink" href="#book" data-service="Free class: Prasna Jyotish">Book your free class</a>
 </article><article class="course">
 <p class="eyebrow">Numerology</p>
 <h3>Vedic Numerology</h3>
 <dl class="facts"><div><dt>Course fee</dt><dd>₹7,000</dd></div><div><dt>Duration</dt><dd>10 hours</dd></div><div><dt>Per hour</dt><dd>₹700</dd></div></dl>
-<p class="muted small">First class free · Syllabus coming soon</p>
+<p class="muted small">First class free</p>
+<details class="syl"><summary>View syllabus</summary><ol><li><div class="syl-h"><b>Numbers and planets</b><span>1 hour</span></div><p>The numbers 1 to 9 and their ruling planets</p></li><li><div class="syl-h"><b>Birth and destiny numbers</b><span>2 hours</span></div><p>Moolank and Bhagyank: calculation and meaning</p></li><li><div class="syl-h"><b>Name number</b><span>2 hours</span></div><p>Letter values and name analysis</p></li><li><div class="syl-h"><b>The numerology grid</b><span>2 hours</span></div><p>Lo Shu grid; missing and repeated numbers</p></li><li><div class="syl-h"><b>Compatibility</b><span>1 hour</span></div><p>Matching numbers for marriage and partnership</p></li><li><div class="syl-h"><b>Names for babies and businesses</b><span>1 hour</span></div><p>Choosing a suitable name, personal year and favourable dates</p></li><li><div class="syl-h"><b>Practice</b><span>1 hour</span></div><p>Full numerology readings of sample cases</p></li></ol><p class="muted small">Topics may be adjusted to the pace of the batch.</p></details>
 <a class="textlink" href="#book" data-service="Free class: Vedic Numerology">Book your free class</a>
 </article></div>
    <p class="callout">The first class of every course is a free sample lesson, so you can judge the teaching before you pay. Course hours are a guide. If a course needs more time to cover the subject well, the extra hours are given at no extra charge.</p>
