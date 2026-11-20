@@ -969,6 +969,11 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
     sel.innerHTML="";
     I.langs.forEach(function(l){var o=document.createElement("option");o.value=l[0];o.textContent=l[1];o.lang=l[0];sel.appendChild(o);});
     var orig=new WeakMap(), lang="en", dict=null, busy=false;
+    // blog posts carry their own translations (blog-data.js, field tr)
+    var BT={}; function nz(x){return String(x).replace(/\s+/g," ").trim();}
+    ((window.PK_BLOG&&window.PK_BLOG.posts)||[]).forEach(function(p){
+      for(var c in (p.tr||{})){var t=p.tr[c]; BT[c]=BT[c]||{}; if(t.title) BT[c][nz(p.title)]=t.title; if(t.teaching) BT[c][nz(p.teaching)]=t.teaching;}
+    });
     function one(n){
       var pe=n.parentElement; if(!pe||pe.closest("script,style,#langSel,textarea,[data-noi18n]")) return;
       var o=orig.get(n);
@@ -978,7 +983,8 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
         var t=o.replace(/\s+/g," ").trim();
         if(t){
           var r=null;
-          if(pe.getAttribute("data-k")==="month"&&dict.month[t]) r=dict.month[t];
+          if(BT[lang]&&BT[lang][t]) r=BT[lang][t];
+          else if(pe.getAttribute("data-k")==="month"&&dict.month[t]) r=dict.month[t];
           else if(dict.exact[t]) r=dict.exact[t];
           else if(dict.text&&dict.text[t]) r=dict.text[t];
           else if(pe.closest("[data-note]")) r=dict.note(t);
