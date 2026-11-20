@@ -201,6 +201,7 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
 .testi-grid .testi blockquote p{font-size:19px}
 .initials{width:56px;height:56px;border-radius:50%;flex:none;display:inline-flex;align-items:center;justify-content:center;background:var(--violet);color:var(--gold);font:600 18px var(--body);letter-spacing:.04em;border:2px solid var(--gold)}
 /* blog post */
+#postTeach,#recentList .post p{white-space:pre-line}
 .post-wait{color:#B9A9D6;font-style:italic}
 .post-edit{display:flex;flex-direction:column;gap:14px;background:var(--ivory);border-radius:6px;padding:20px}
 .post-edit .field{color:var(--violet)}
@@ -929,7 +930,7 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
     }
     if(!window.claude||!window.claude.use){
       // live website: teaching points come from blog-data.js
-      var P=((window.PK_BLOG&&window.PK_BLOG.posts)||[]).slice().sort(function(a,b){return a.date<b.date?1:-1;}), curP=null;
+      var P=((window.PK_BLOG&&window.PK_BLOG.posts)||[]).filter(function(p){return p.date<=key;}).sort(function(a,b){return a.date<b.date?1:-1;}), curP=null;
       P.forEach(function(p){if(p.date===key)curP=p;});
       showPost(curP);
       showRecent(P.map(function(p){return {id:p.date,data:function(){return p;}};}));
