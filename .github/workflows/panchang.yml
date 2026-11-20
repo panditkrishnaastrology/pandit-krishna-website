@@ -1,0 +1,44 @@
+name: Daily Panchang update
+
+on:
+  schedule:
+    - cron: "35 18 * * *"   # 00:05 IST every day
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: panchang
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Swiss Ephemeris
+        run: pip install pyswisseph==2.10.3.2
+      - name: Calculate 7 days of Panchang (IST)
+        run: python tools/panchang_calc.py --days 7 --out panchang-data.js
+      - name: Check the data
+        run: |
+          node -e '
+            global.window={}; require("./panchang-data.js");
+            const d=window.PK_PANCHANG.days;
+            const today=new Date(Date.now()+5.5*3600e3).toISOString().slice(0,10);
+            if(d.length!==7||d[0].date!==today) throw new Error("bad dates "+d[0].date+" vs "+today);
+            console.log("OK", d[0].date);'
+      - name: Commit and push
+        run: |
+          git config user.name "Panchang bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add panchang-data.js
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          git commit -m "Daily Panchang update $(TZ=Asia/Kolkata date +%F)"
+          git pull --rebase origin main
+          git push origin main
