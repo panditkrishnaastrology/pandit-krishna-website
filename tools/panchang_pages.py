@@ -72,7 +72,7 @@ def page(d, days, generated, method, canonical_path, is_today):
         f"<a href='{x['date']}.html'{' aria-current=\"page\"' if x['date'] == date else ''}>{e(x['date_label'].split(',')[0][:3])}, {int(x['date'][8:])} "
         f"{datetime.strptime(x['date'], '%Y-%m-%d').strftime('%b')}</a>" for x in days)
     return f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{e(title)}</title><meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{SITE}/{canonical_path}"><link rel="icon" href="../favicon.ico">
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:image" content="{SITE}/img/og-image.png">
