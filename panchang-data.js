@@ -1,5 +1,5 @@
 window.PK_PANCHANG = {
- "generated": "2026-11-20 09:02 IST",
+ "generated": "2026-11-20 09:03 IST",
  "method": "Swiss Ephemeris, sidereal zodiac, Lahiri (Chitrapaksha) ayanamsa, mean Rahu",
  "days": [
   {
