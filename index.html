@@ -907,7 +907,7 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
       add(d.masa_purnimanta,"month"); add(" (Purnimanta)"); sep(" · "); add("Bhubaneswar");
     })();
     document.getElementById("postNote").textContent=d.planet_note||"";
-    function nice(k){var p=k.split("-");return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"long",year:"numeric"});}
+    function nice(k){var p=k.split("-");return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"});}
     function showPost(data){
       var t=document.getElementById("postTeach");
       if(data&&data.teaching){t.textContent=data.teaching;t.parentNode.hidden=false;}
@@ -922,7 +922,7 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
       rc.hidden=false; box.innerHTML="";
       items.forEach(function(x){
         var v=x.data(), el=document.createElement("div"); el.className="post";
-        var sp=document.createElement("span"); sp.textContent=nice(x.id);
+        var sp=document.createElement("span"); sp.textContent=nice(x.id); sp.setAttribute("data-terms","");
         var b=document.createElement("b"); b.textContent=v.title||"Teaching point";
         var pp=document.createElement("p"); pp.textContent=v.teaching;
         el.appendChild(sp); el.appendChild(b); el.appendChild(pp); box.appendChild(el);
