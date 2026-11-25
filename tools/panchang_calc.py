@@ -383,13 +383,14 @@ MRITYU = dict(enumerate(_ns("Anuradha", "Uttara Ashadha", "Shatabhisha", "Ashwin
 UTPATA = dict(enumerate(_ns("Vishakha", "Purva Ashadha", "Dhanishta", "Revati", "Rohini", "Pushya", "Uttara Phalguni")))
 YAMAGHANTA = dict(enumerate(_ns("Magha", "Vishakha", "Ardra", "Mula", "Krittika", "Rohini", "Hasta")))
 DAGDHA = {0: [12], 1: [11], 2: [5], 3: [3], 4: [6], 5: [8], 6: [9]}   # tithi number in the paksha
+VISHA = {0: [4], 1: [6], 2: [7], 3: [2], 4: [8], 5: [9], 6: [7]}
 RAVI_YOGA = [4, 6, 9, 10, 13, 20]          # Moon's nakshatra counted from the Sun's
 DWIPADA = _ns("Mrigashira", "Chitra", "Dhanishta")
 TRIPADA = _ns("Krittika", "Punarvasu", "Uttara Phalguni", "Vishakha", "Uttara Ashadha", "Purva Bhadrapada")
 YOGA_KIND = {"Sarvartha Siddhi Yoga": "good", "Amrita Siddhi Yoga": "good", "Ravi Yoga": "good",
              "Guru Pushya Yoga": "good", "Ravi Pushya Yoga": "good",
              "Dwipushkar Yoga": "mixed", "Tripushkar Yoga": "mixed",
-             "Mrityu Yoga": "bad", "Utpata Yoga": "bad", "Yamaghanta Yoga": "bad", "Dagdha Yoga": "bad"}
+             "Mrityu Yoga": "bad", "Utpata Yoga": "bad", "Yamaghanta Yoga": "bad", "Dagdha Yoga": "bad", "Visha Yoga": "bad"}
 
 
 def _spans(kind, a, b):
@@ -443,6 +444,9 @@ def special_yogas(sr, sr_next, weekday):
     for t, a, b in tithis:
         if t % 15 + 1 in DAGDHA[weekday] and t % 15 != 14:
             add("Dagdha Yoga", a, b)
+    for t, a, b in tithis:
+        if t % 15 + 1 in VISHA[weekday] and t % 15 != 14:
+            add("Visha Yoga", a, b)
     return found
 
 def day_panchang(date):

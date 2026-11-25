@@ -654,7 +654,7 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
   <summary>How we choose the times</summary>
   <ul>
    <li>Panchanga shuddhi: the tithi, nakshatra, yoga, karana and weekday must suit the purpose. Rikta tithis (Chaturthi, Navami, Chaturdashi), Amavasya, Vishti (Bhadra) karana and the Vyatipata and Vaidhriti yogas are avoided.</li>
-   <li>Inauspicious periods are avoided: Rahu Kaal, Yamaganda, Gulika Kaal, Durmuhurta, Varjyam and Gandanta, and the Mrityu, Utpata, Yamaghanta and Dagdha yogas.</li>
+   <li>Inauspicious periods are avoided: Rahu Kaal, Yamaganda, Gulika Kaal, Durmuhurta, Varjyam and Gandanta, and the Mrityu, Utpata, Yamaghanta, Dagdha and Visha yogas.</li>
    <li>Special auspicious yogas are shown with the times they cover: Sarvartha Siddhi, Amrita Siddhi, Ravi, Guru Pushya and Ravi Pushya. Dwipushkar and Tripushkar yogas are also shown; in them the result of an act repeats.</li>
    <li>Tara bala and Chandra bala are checked from your birth nakshatra and rashi. Vipat, Pratyak and Naidhana taras are avoided.</li>
    <li>Lagna shuddhi: the rising lagna should suit the purpose, and the Moon should not be in the 6th or 8th from it. Jupiter or Venus in a kendra strengthens the time; malefics in the 1st or 8th weaken it. Abhijit muhurta adds strength.</li>
@@ -989,7 +989,7 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
         h+='<h3 class="pk-sub">Special yogas</h3>'+(sy.length?'<div class="pk-times">'+sy.map(function(y){var c=y.kind==="bad"?"avoid":"good";
           return '<div class="pk-time '+c+'"><span class="pk-tag">'+(y.kind==="bad"?"Avoid":y.kind==="mixed"?"Special":"Auspicious")+'</span><span class="pk-k" style="color:var(--violet)">'+esc(y.name)+'</span><b>'+esc(y.time)+'</b></div>';}).join("")+'</div>'
           :'<p class="muted small">No special yoga today.</p>')+
-          '<p class="muted small">Sarvartha Siddhi, Amrita Siddhi, Ravi, Guru Pushya and Ravi Pushya yogas are auspicious. Mrityu, Utpata, Yamaghanta and Dagdha yogas are avoided for new work. In Dwipushkar and Tripushkar yogas the result of an act repeats two or three times: good for gains and purchases, avoided for losses, loans and illness.</p>';
+          '<p class="muted small">Sarvartha Siddhi, Amrita Siddhi, Ravi, Guru Pushya and Ravi Pushya yogas are auspicious. Mrityu, Utpata, Yamaghanta, Dagdha and Visha yogas are avoided for new work. In Dwipushkar and Tripushkar yogas the result of an act repeats two or three times: good for gains and purchases, avoided for losses, loans and illness.</p>';
       }
       h+='</div>';
       if(d.hora){

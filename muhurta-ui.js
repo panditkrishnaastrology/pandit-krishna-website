@@ -23,7 +23,7 @@
     "it.lagna": "lagna", "it.rashi": "rashi", "it.nak": "nakshatra", "and": " and ",
     "avoid": "Avoid:", "bad.Rahu Kaal": "Rahu Kaal", "bad.Yamaganda": "Yamaganda", "bad.Gulika Kaal": "Gulika Kaal", "bad.Durmuhurta": "Durmuhurta",
     "bad.Varjyam": "Varjyam", "bad.Gandanta": "Gandanta",
-    "bad.Mrityu Yoga": "Mrityu Yoga", "bad.Utpata Yoga": "Utpata Yoga", "bad.Yamaghanta Yoga": "Yamaghanta Yoga", "bad.Dagdha Yoga": "Dagdha Yoga",
+    "bad.Mrityu Yoga": "Mrityu Yoga", "bad.Utpata Yoga": "Utpata Yoga", "bad.Yamaghanta Yoga": "Yamaghanta Yoga", "bad.Dagdha Yoga": "Dagdha Yoga", "bad.Visha Yoga": "Visha Yoga",
     "special": "Special yogas:", "S_good": "{1} (auspicious yoga)", "S_mixed": "{1}: the result of the act repeats",
     "noday": "No suitable time on this day.",
     "D1": "Disha shool: avoid starting a journey towards the {1} today.",
