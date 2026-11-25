@@ -240,6 +240,11 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
 .mh-facts{display:flex;flex-wrap:wrap;gap:6px}
 .mh-facts span{font-size:13px;padding:4px 9px;border-radius:8px;background:var(--white);border:1px solid var(--line);color:var(--ink)}
 .mh-why{margin:0;padding-left:18px;font-size:14px;color:var(--muted);line-height:1.5}
+.mh-rules{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:16px 20px}
+.mh-rules summary{cursor:pointer;font:700 18px var(--body);color:var(--violet)}
+.mh-rules summary:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:4px}
+.mh-rules ul{margin:12px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:8px;line-height:1.55;color:var(--ink)}
+.mh-rules p{margin:12px 0 0;color:var(--muted);font-size:14px;line-height:1.55}
 .mh-note{margin:0;font-size:13px;color:var(--muted);line-height:1.6;max-width:70ch}
 #mhOut{display:flex;flex-direction:column;gap:16px}
 @media (max-width:640px){.mh-form{grid-template-columns:minmax(0,1fr);padding:18px}}
@@ -643,6 +648,18 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
   <button class="mh-btn" type="submit">Find auspicious times</button>
  </form>
  <div id="mhOut" aria-live="polite" data-noi18n></div>
+ <details class="mh-rules">
+  <summary>How we choose the times</summary>
+  <ul>
+   <li>Panchanga shuddhi: the tithi, nakshatra, yoga, karana and weekday must suit the purpose. Rikta tithis (Chaturthi, Navami, Chaturdashi), Amavasya, Vishti (Bhadra) karana and the Vyatipata and Vaidhriti yogas are avoided.</li>
+   <li>Inauspicious periods are avoided: Rahu Kaal, Yamaganda, Gulika Kaal, Durmuhurta, Varjyam and Gandanta.</li>
+   <li>Tara bala and Chandra bala are checked from your birth nakshatra and rashi. Vipat, Pratyak and Naidhana taras are avoided.</li>
+   <li>Lagna shuddhi: the rising lagna should suit the purpose, and the Moon should not be in the 6th or 8th from it. Jupiter or Venus in a kendra strengthens the time; malefics in the 1st or 8th weaken it. Abhijit muhurta adds strength.</li>
+   <li>Marriage: only the marriage nakshatras; the 7th and 8th houses from the lagna must be empty; no marriage during Chaturmas, Kharmas, or when Jupiter or Venus is combust.</li>
+   <li>Travel: Disha shool and Panchaka are considered. Purchase and sale follow the kraya and vikraya nakshatras.</li>
+  </ul>
+  <p>Based on the classical Muhurta Chintamani. Pandit Krishna also applies his own principles from his practice, which are not listed here.</p>
+ </details>
  <p class="mh-note">Times are for Bhubaneswar (IST); in other Indian cities they shift by a few minutes. Your details stay on your device and are not sent anywhere. This is general guidance from the Panchang. For marriage and other major events, please consult Pandit Krishna for a muhurta based on your full birth chart.</p>
  <p><a class="btn btn-gold" href="#book" data-service="">Ask for a personal muhurta</a></p>
  </div>

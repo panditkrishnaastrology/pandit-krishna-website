@@ -31,7 +31,13 @@
     "C3": "Sun in {1} (Kharmas): marriage is traditionally not held now.",
     "G1": "Guru in Simha (Simhastha Guru) is inauspicious for marriage. The marriage times below are given without considering Guru in Simha.",
     "lv.Excellent": "Excellent", "lv.Very good": "Very good", "lv.Good": "Good",
-    "F_lagna": "{1} lagna", "F_moon": "Moon in {1}", "F_nak": "{1} nakshatra", "F_yoga": "{1} yoga", "F_kar": "{1} karana",
+    "F_lagna": "{1} lagna", "F_moon": "Moon in {1}", "F_nak": "{1} nakshatra", "F_nakT": "{1} nakshatra · {2} tara",
+    "W1": "{1} nakshatra suits {2}", "W2": "{1} tithi is favourable", "W3": "{1} lagna suits {2}",
+    "W4": "Jupiter in a kendra from the lagna", "W5": "Venus in a kendra from the lagna",
+    "W6": "Sun or Jupiter in the 10th from the lagna", "W7": "Mercury in a kendra from the lagna", "W8": "Abhijit muhurta",
+    "W9": "{1} tara from your birth star", "W10": "Chandra bala: Moon in the {1} from your rashi", "W12": "Moon in the {1} from the muhurta lagna",
+    "tara.Janma": "Janma", "tara.Sampat": "Sampat", "tara.Vipat": "Vipat", "tara.Kshema": "Kshema", "tara.Pratyak": "Pratyak",
+    "tara.Sadhaka": "Sadhaka", "tara.Naidhana": "Naidhana", "tara.Mitra": "Mitra", "tara.Parama Mitra": "Parama Mitra", "F_yoga": "{1} yoga", "F_kar": "{1} karana",
     "loading": "Loading…", "failed": "The times could not be loaded. Please check your connection and try again."
   };
   var LV = ["Good", "Very good", "Excellent"];
@@ -50,6 +56,11 @@
     return s.replace(/\{(\d)\}/g, function (m, n) { return args[+n - 1]; });
   }
   function name(x) { var d = dict(); return d ? d.phrase(String(x)) : String(x); }
+  function ord(n) {
+    if (lang() !== "en") return String(n);
+    var s = n % 100 > 10 && n % 100 < 14 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" })[n % 10] || "th";
+    return n + s;
+  }
   function num(s) {
     var d = NUM[lang()]; if (!d) return s;
     return s.replace(/[0-9]/g, function (c) { return d.charAt(+c); });
@@ -154,10 +165,23 @@
         top.appendChild(el("span", "mh-badge" + (level === "Excellent" ? " ex" : ""), t("lv." + level)));
         c.appendChild(top);
         var chips = el("div", "mh-facts");
-        [t("F_lagna", [name(w[4])]), t("F_moon", [name(w[5])]), t("F_nak", [name(w[6])]),
+        [t("F_lagna", [name(w[4])]), t("F_moon", [name(w[5])]), w[10] ? t("F_nakT", [name(w[6]), t("tara." + w[10])]) : t("F_nak", [name(w[6])]),
           name(w[7]), t("F_yoga", [name(w[8])]), t("F_kar", [name(w[9])])]
           .forEach(function (x) { chips.appendChild(el("span", null, x)); });
         c.appendChild(chips);
+        if (w[11] && w[11].length) {
+          var ul = el("ul", "mh-why");
+          w[11].forEach(function (r) {
+            var k = r[0], s;
+            if (k === "W1" || k === "W3") s = t(k, [name(r[1]), t("p." + r[2])]);
+            else if (k === "W2") s = t(k, [name(r[1])]);
+            else if (k === "W9") s = t(k, [t("tara." + r[1])]);
+            else if (k === "W10" || k === "W12") s = t(k, [ord(r[1])]);
+            else s = t(k, []);
+            ul.appendChild(el("li", null, s));
+          });
+          c.appendChild(ul);
+        }
         box.appendChild(c);
       });
       out.appendChild(box);
