@@ -41,7 +41,8 @@
     "tara.Janma": "Janma", "tara.Sampat": "Sampat", "tara.Vipat": "Vipat", "tara.Kshema": "Kshema", "tara.Pratyak": "Pratyak",
     "tara.Sadhaka": "Sadhaka", "tara.Naidhana": "Naidhana", "tara.Mitra": "Mitra", "tara.Parama Mitra": "Parama Mitra", "F_yoga": "{1} yoga", "F_kar": "{1} karana",
     "dl_all": "Save all 7 days as PDF", "dl_day": "Save this day as PDF",
-    "prep": "Prepared on {1} · panditkrishnaastrology.com · WhatsApp +91 96680 24876", "pdf": "Auspicious times",
+    "prepd": "Prepared on {1}", "pdf": "Auspicious times",
+    "tag": "Vedic, Nadi and Prasna Jyotish · Vedic Numerology", "pf": "For a personal muhurta based on your full birth chart, contact Pandit Krishna.",
     "loading": "Loading…", "failed": "The times could not be loaded. Please check your connection and try again."
   };
   var LV = ["Good", "Very good", "Excellent"];
@@ -238,19 +239,39 @@
   function savePdf(which) {
     var old = document.getElementById("mhPrint"); if (old) old.remove();
     var pr = document.createElement("div"); pr.id = "mhPrint"; pr.setAttribute("data-noi18n", "");
-    var hd = el("div", "mhp-head"), logo = document.querySelector(".site-header .logo");
-    if (logo) hd.appendChild(logo.cloneNode(true));
-    var bt = el("div", "mhp-brand"); bt.appendChild(el("b", null, "Pandit Krishna Astrology"));
     var now = new Date(Date.now() + 19800000);
-    bt.appendChild(el("span", null, t("prep", [name(now.getUTCDate() + " " + MON[now.getUTCMonth()]) + " " + now.getUTCFullYear()])));
-    hd.appendChild(bt); pr.appendChild(hd);
+    var when = name(now.getUTCDate() + " " + MON[now.getUTCMonth()]) + " " + now.getUTCFullYear();
+    /* letterhead */
+    var hd = el("div", "mhp-head"), logo = document.querySelector(".site-header .logo");
+    if (logo) { var lg2 = logo.cloneNode(true); lg2.setAttribute("width", "72"); lg2.setAttribute("height", "72"); hd.appendChild(lg2); }
+    var bt = el("div", "mhp-brand");
+    bt.appendChild(el("b", null, "Pandit Krishna Astrology"));
+    bt.appendChild(el("span", "mhp-tag", t("tag")));
+    /* contact details are kept exactly as written (no digit conversion) */
+    function raw(txt) { var s = document.createElement("span"); s.textContent = txt; return s; }
+    bt.appendChild(raw("Lane-7, Mallik Complex, Jagamara, Bhubaneswar, Odisha – 751030"));
+    bt.appendChild(raw("Phone / WhatsApp: +91 96680 24876"));
+    bt.appendChild(raw("Email: panditkrishnaastrology2026@gmail.com"));
+    bt.appendChild(raw("Web: panditkrishnaastrology.com"));
+    hd.appendChild(bt);
+    hd.appendChild(el("span", "mhp-date", t("prepd", [when])));
+    /* footer, repeated on every page (table footer) */
+    var tbl = document.createElement("table"), tf = document.createElement("tfoot"), tb = document.createElement("tbody");
+    var fr = document.createElement("tr"), fc = document.createElement("td"), br = document.createElement("tr"), bc = document.createElement("td");
+    fc.className = "mhp-foot";
+    fc.appendChild(el("span", null, t("pf")));
+    var fl = document.createElement("span"); fl.textContent = "Pandit Krishna Astrology  ·  +91 96680 24876  ·  panditkrishnaastrology.com"; fc.appendChild(fl);
+    fr.appendChild(fc); tf.appendChild(fr); br.appendChild(bc); tb.appendChild(br);
+    tbl.appendChild(tf); tbl.appendChild(tb); tbl.className = "mhp-table"; pr.appendChild(tbl);
+    var body = el("div", "mhp-body"); bc.appendChild(body);
+    body.appendChild(hd);
     var head = out.querySelector(".mh-res-head");
-    if (head) pr.appendChild(head.cloneNode(true));
+    if (head) body.appendChild(head.cloneNode(true));
     out.querySelectorAll(".mh-day").forEach(function (b) {
-      if (which === "all" || b.getAttribute("data-mh-day") === which) pr.appendChild(b.cloneNode(true));
+      if (which === "all" || b.getAttribute("data-mh-day") === which) body.appendChild(b.cloneNode(true));
     });
     var note = document.querySelector('[data-view="muhurta"] .mh-note');
-    if (note) pr.appendChild(note.cloneNode(true));
+    if (note) body.appendChild(note.cloneNode(true));
     pr.querySelectorAll(".mh-dl").forEach(function (b) { b.remove(); });
     document.body.appendChild(pr);
     var title = document.title;

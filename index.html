@@ -198,14 +198,21 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
  html.mh-printing body>*:not(#mhPrint){display:none!important}
  html.mh-printing #mhPrint{display:flex;flex-direction:column;gap:14px;font-size:12pt;color:#111}
  html.mh-printing{background:#fff}
- #mhPrint .mhp-head{display:flex;align-items:center;gap:14px;border-bottom:2px solid #D4AF37;padding-bottom:10px}
- #mhPrint .mhp-head .logo{width:56px;height:56px}
- #mhPrint .mhp-brand{display:flex;flex-direction:column;gap:2px}
- #mhPrint .mhp-brand b{font:700 20pt var(--display);color:#2A1650}
- #mhPrint .mhp-brand span{font-size:10pt;color:#555}
- #mhPrint .mh-day{break-inside:auto;border:1px solid #ccc}
+ #mhPrint .mhp-table{width:100%;border-collapse:collapse}
+ #mhPrint .mhp-table td{padding:0;vertical-align:top}
+ #mhPrint .mhp-body{display:flex;flex-direction:column;gap:14px}
+ #mhPrint .mhp-head{display:flex;align-items:center;gap:16px;border-bottom:3px solid #D4AF37;padding-bottom:12px}
+ #mhPrint .mhp-head .logo{width:72px;height:72px;flex:none}
+ #mhPrint .mhp-brand{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+ #mhPrint .mhp-brand b{font:700 22pt/1.1 var(--display);color:#2A1650}
+ #mhPrint .mhp-brand .mhp-tag{font-size:10.5pt;font-weight:600;color:#6B4F00}
+ #mhPrint .mhp-brand span{font-size:9.5pt;color:#444}
+ #mhPrint .mhp-date{align-self:flex-start;font-size:9.5pt;color:#444;white-space:nowrap}
+ #mhPrint .mhp-foot{padding-top:10px!important;border-top:1px solid #D4AF37;font-size:9pt;color:#444;text-align:center}
+ #mhPrint .mhp-foot span{display:block}
+ #mhPrint .mh-day{break-inside:auto;border:1px solid #ccc;margin-top:14px}
  #mhPrint .mh-win{break-inside:avoid;background:#fff}
- #mhPrint .mh-note{font-size:10pt;color:#444}
+ #mhPrint .mh-note{font-size:10pt;color:#444;margin-top:14px}
  @page{margin:14mm}
 }
 /* muhurta finder */
