@@ -31,11 +31,11 @@
     "C3": "Sun in {1} (Kharmas): marriage is traditionally not held now.",
     "G1": "Guru in Simha (Simhastha Guru) is inauspicious for marriage. The marriage times below are given without considering Guru in Simha.",
     "lv.Excellent": "Excellent", "lv.Very good": "Very good", "lv.Good": "Good",
-    "F_lagna": "{1} lagna", "F_moon": "Moon in {1}", "F_nak": "{1} nakshatra", "F_nakT": "{1} nakshatra · {2} tara",
+    "F_lagna": "{1} lagna", "F_lagnaH": "{1} lagna ({2} from your lagna)", "F_moon": "Moon in {1}", "F_moonH": "Moon in {1} ({2} from your rashi)", "F_nak": "{1} nakshatra", "F_nakT": "{1} nakshatra · {2} tara",
     "W1": "{1} nakshatra suits {2}", "W2": "{1} tithi is favourable", "W3": "{1} lagna suits {2}",
     "W4": "Jupiter in a kendra from the lagna", "W5": "Venus in a kendra from the lagna",
     "W6": "Sun or Jupiter in the 10th from the lagna", "W7": "Mercury in a kendra from the lagna", "W8": "Abhijit muhurta",
-    "W9": "{1} tara from your birth star", "W10": "Chandra bala: Moon in the {1} from your rashi", "W12": "Moon in the {1} from the muhurta lagna",
+    "W9": "{1} tara from your birth star", "W10": "Chandra bala: Moon in the {1} from your rashi", "W11": "Malefic in the 3rd, 6th or 11th from the lagna: {1}", "W11i": "{1} ({2})", "W12": "Moon in the {1} from the muhurta lagna",
     "tara.Janma": "Janma", "tara.Sampat": "Sampat", "tara.Vipat": "Vipat", "tara.Kshema": "Kshema", "tara.Pratyak": "Pratyak",
     "tara.Sadhaka": "Sadhaka", "tara.Naidhana": "Naidhana", "tara.Mitra": "Mitra", "tara.Parama Mitra": "Parama Mitra", "F_yoga": "{1} yoga", "F_kar": "{1} karana",
     "loading": "Loading…", "failed": "The times could not be loaded. Please check your connection and try again."
@@ -165,7 +165,7 @@
         top.appendChild(el("span", "mh-badge" + (level === "Excellent" ? " ex" : ""), t("lv." + level)));
         c.appendChild(top);
         var chips = el("div", "mh-facts");
-        [t("F_lagna", [name(w[4])]), t("F_moon", [name(w[5])]), w[10] ? t("F_nakT", [name(w[6]), t("tara." + w[10])]) : t("F_nak", [name(w[6])]),
+        [w[12] ? t("F_lagnaH", [name(w[4]), ord(w[12])]) : t("F_lagna", [name(w[4])]), w[13] ? t("F_moonH", [name(w[5]), ord(w[13])]) : t("F_moon", [name(w[5])]), w[10] ? t("F_nakT", [name(w[6]), t("tara." + w[10])]) : t("F_nak", [name(w[6])]),
           name(w[7]), t("F_yoga", [name(w[8])]), t("F_kar", [name(w[9])])]
           .forEach(function (x) { chips.appendChild(el("span", null, x)); });
         c.appendChild(chips);
@@ -177,6 +177,7 @@
             else if (k === "W2") s = t(k, [name(r[1])]);
             else if (k === "W9") s = t(k, [t("tara." + r[1])]);
             else if (k === "W10" || k === "W12") s = t(k, [ord(r[1])]);
+            else if (k === "W11") s = t(k, [r[1].map(function (q) { return t("W11i", [name(q[0]), ord(q[1])]); }).join(", ")]);
             else s = t(k, []);
             ul.appendChild(el("li", null, s));
           });

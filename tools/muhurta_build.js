@@ -15,7 +15,7 @@ const F = window.PK_MUHURTA_FINDER, D = window.PK_MUHURTA;
 const out = process.argv[3] || path.join(root, "muhurta-results");
 fs.mkdirSync(out, { recursive: true });
 const LV = ["Good", "Very good", "Excellent"];
-const SHOW = ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10", "W12"];
+const SHOW = ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10", "W11", "W12"];
 
 /* every choice a visitor can make: lagna (or none) x rashi (or none) x nakshatra in that rashi (or none) */
 const combos = [];
@@ -40,9 +40,9 @@ for (const purpose of Object.keys(F.PURPOSE)) {
     const ids = [];
     res.forEach((d, di) => d.wins.forEach(w => {
       const f = w.j.facts;
-      /* only reasons from the classical (published) rules are shown; the owner's own rules stay private */
+      /* reasons shown to visitors: the list SHOW above (all of them for now) */
       const why = w.j.why.filter(r => SHOW.indexOf(r[0]) >= 0);
-      const row = [di, w.start, w.end, LV.indexOf(w.level), f.lagna, f.moon, f.nak, f.tithi, f.yoga, f.karana, f.tara, why];
+      const row = [di, w.start, w.end, LV.indexOf(w.level), f.lagna, f.moon, f.nak, f.tithi, f.yoga, f.karana, f.tara, why, f.lh, f.cb];
       const key = JSON.stringify(row);
       if (!index.has(key)) { index.set(key, wins.length); wins.push(row); }
       ids.push(index.get(key).toString(36));
