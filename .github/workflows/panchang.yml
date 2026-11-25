@@ -37,24 +37,13 @@ jobs:
         run: |
           python tools/muhurta_calc.py --days 7 --out muhurta-data.js
           node -e 'global.window={}; require("./muhurta-data.js"); const d=window.PK_MUHURTA.days; if(d.length!==7||!d[0].lagna.length) throw new Error("bad muhurta data"); console.log("OK muhurta", d[0].date);'
-      - name: Build the muhurta results (rules stay encrypted)
-        env:
-          MUHURTA_KEY: ${{ secrets.MUHURTA_KEY }}
-        run: |
-          if [ -z "$MUHURTA_KEY" ]; then echo "MUHURTA_KEY secret not set: results not rebuilt"; exit 0; fi
-          umask 077
-          RULES="$RUNNER_TEMP/rules.js"
-          openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -in tools/muhurta-rules.enc -out "$RULES" -pass env:MUHURTA_KEY
-          node tools/muhurta_build.js "$RULES" > /dev/null
-          rm -f "$RULES"
-          echo "Muhurta results rebuilt"
       - name: Build the daily Panchang pages and sitemap
         run: python tools/panchang_pages.py .
       - name: Commit and push
         run: |
           git config user.name "Panchang bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add panchang-data.js muhurta-data.js muhurta-results panchang sitemap.xml
+          git add panchang-data.js muhurta-data.js panchang sitemap.xml
           if git diff --cached --quiet; then echo "No change"; exit 0; fi
           git commit -m "Daily Panchang update $(TZ=Asia/Kolkata date +%F)"
           git pull --rebase origin main

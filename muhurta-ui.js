@@ -1,7 +1,7 @@
 /* Pandit Krishna Astrology — "Know your auspicious time": the form and the results.
-   The answers are prepared every night and stored in muhurta-results/<purpose>.json;
-   this page only looks up the answer for the visitor's choices. Nothing entered is
-   stored or sent: the browser downloads the same file for every visitor.
+   The times are worked out in the visitor's own browser (muhurta-engine.js) from the
+   day's Panchang data (muhurta-data.js). Nothing entered is stored or sent anywhere,
+   so the page puts no load on any server.
    Text is built here in the visitor's language (English below; other languages
    come from lang-xx.js under keys "MH.…"). */
 (function () {
@@ -31,11 +31,11 @@
     "C3": "Sun in {1} (Kharmas): marriage is traditionally not held now.",
     "G1": "Guru in Simha (Simhastha Guru) is inauspicious for marriage. The marriage times below are given without considering Guru in Simha.",
     "lv.Excellent": "Excellent", "lv.Very good": "Very good", "lv.Good": "Good",
-    "F_lagna": "{1} lagna", "F_lagnaH": "{1} lagna ({2} from your lagna)", "F_moon": "Moon in {1}", "F_moonH": "Moon in {1} ({2} from your rashi)", "F_nak": "{1} nakshatra", "F_nakT": "{1} nakshatra · {2} tara",
+    "F_lagna": "{1} lagna", "F_moon": "Moon in {1}", "F_nak": "{1} nakshatra", "F_nakT": "{1} nakshatra · {2} tara",
     "W1": "{1} nakshatra suits {2}", "W2": "{1} tithi is favourable", "W3": "{1} lagna suits {2}",
     "W4": "Jupiter in a kendra from the lagna", "W5": "Venus in a kendra from the lagna",
     "W6": "Sun or Jupiter in the 10th from the lagna", "W7": "Mercury in a kendra from the lagna", "W8": "Abhijit muhurta",
-    "W9": "{1} tara from your birth star", "W10": "Chandra bala: Moon in the {1} from your rashi", "W11": "Malefic in the 3rd, 6th or 11th from the lagna: {1}", "W11i": "{1} ({2})", "W12": "Moon in the {1} from the muhurta lagna",
+    "W9": "{1} tara from your birth star", "W10": "Chandra bala: Moon in the {1} from your rashi", "W12": "Moon in the {1} from the muhurta lagna",
     "tara.Janma": "Janma", "tara.Sampat": "Sampat", "tara.Vipat": "Vipat", "tara.Kshema": "Kshema", "tara.Pratyak": "Pratyak",
     "tara.Sadhaka": "Sadhaka", "tara.Naidhana": "Naidhana", "tara.Mitra": "Mitra", "tara.Parama Mitra": "Parama Mitra", "F_yoga": "{1} yoga", "F_kar": "{1} karana",
     "loading": "Loading…", "failed": "The times could not be loaded. Please check your connection and try again."
@@ -113,23 +113,35 @@
   rs.addEventListener("change", lists);
 
   /* ---- results ---- */
-  var cache = {}, last = null;
-  function load(purpose) {
-    if (cache[purpose]) return cache[purpose];
-    cache[purpose] = fetch("muhurta-results/" + purpose + ".json", { cache: "no-cache" })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .catch(function (e) { delete cache[purpose]; throw e; });
-    return cache[purpose];
+  var last = null;
+  /* reasons shown to visitors: the classical ones only */
+  var SHOW = ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10", "W12"];
+  function compute(natal, purpose) {
+    var F = window.PK_MUHURTA_FINDER, D = window.PK_MUHURTA;
+    if (!F || !D || !D.days || !D.days.length) throw new Error("data");
+    var res = F.find({ lagna: natal.lagna, rashi: natal.rashi, nak: natal.nak }, purpose, D.days[0].sunrise - 1);
+    var wins = [], days = res.map(function (d) {
+      return { date: d.day.date, label: d.day.label, jupiter: d.day.planets.jupiter.sign, warn: d.warn,
+        avoid: Object.keys(d.day.bad).reduce(function (a, k) {
+          var v = d.day.bad[k]; (typeof v[0] === "number" ? [v] : v).forEach(function (s) { a.push([k, s[0], s[1]]); }); return a;
+        }, []) };
+    });
+    res.forEach(function (d, di) {
+      d.wins.forEach(function (w) {
+        var f = w.j.facts;
+        wins.push([di, w.start, w.end, LV.indexOf(w.level), f.lagna, f.moon, f.nak, f.tithi, f.yoga, f.karana, f.tara,
+          w.j.why.filter(function (r) { return SHOW.indexOf(r[0]) >= 0; })]);
+      });
+    });
+    return { days: days, wins: wins };
   }
 
   function render(data) {
     if (!last) return;
     if (!data) { out.textContent = ""; out.appendChild(el("p", "mh-none", t("loading"))); return; }
     var natal = last.natal, purpose = last.purpose, now = Math.floor(Date.now() / 1000);
-    var key = [natal.lagna, natal.rashi, natal.nak].map(function (v) { return v == null ? -1 : v; }).join(",");
-    var ids = (data.map[key] || "").split(".").filter(Boolean).map(function (x) { return parseInt(x, 36); });
     var byDay = data.days.map(function () { return []; });
-    ids.forEach(function (i) { var w = data.wins[i]; if (w && w[2] > now) byDay[w[0]].push(w); });
+    data.wins.forEach(function (w) { if (w[2] > now) byDay[w[0]].push(w); });
     var total = byDay.reduce(function (a, d) { return a + d.length; }, 0);
 
     out.textContent = "";
@@ -165,7 +177,7 @@
         top.appendChild(el("span", "mh-badge" + (level === "Excellent" ? " ex" : ""), t("lv." + level)));
         c.appendChild(top);
         var chips = el("div", "mh-facts");
-        [w[12] ? t("F_lagnaH", [name(w[4]), ord(w[12])]) : t("F_lagna", [name(w[4])]), w[13] ? t("F_moonH", [name(w[5]), ord(w[13])]) : t("F_moon", [name(w[5])]), w[10] ? t("F_nakT", [name(w[6]), t("tara." + w[10])]) : t("F_nak", [name(w[6])]),
+        [t("F_lagna", [name(w[4])]), t("F_moon", [name(w[5])]), w[10] ? t("F_nakT", [name(w[6]), t("tara." + w[10])]) : t("F_nak", [name(w[6])]),
           name(w[7]), t("F_yoga", [name(w[8])]), t("F_kar", [name(w[9])])]
           .forEach(function (x) { chips.appendChild(el("span", null, x)); });
         c.appendChild(chips);
@@ -177,7 +189,6 @@
             else if (k === "W2") s = t(k, [name(r[1])]);
             else if (k === "W9") s = t(k, [t("tara." + r[1])]);
             else if (k === "W10" || k === "W12") s = t(k, [ord(r[1])]);
-            else if (k === "W11") s = t(k, [r[1].map(function (q) { return t("W11i", [name(q[0]), ord(q[1])]); }).join(", ")]);
             else s = t(k, []);
             ul.appendChild(el("li", null, s));
           });
@@ -190,10 +201,10 @@
   }
   function show() {
     if (!last) return;
-    var p = last.purpose;
-    render(null);
-    load(p).then(function (data) { if (last && last.purpose === p) render(data); })
-      .catch(function () { out.textContent = ""; out.appendChild(el("p", "mh-none", t("failed"))); });
+    var data;
+    try { data = compute(last.natal, last.purpose); }
+    catch (e) { out.textContent = ""; out.appendChild(el("p", "mh-none", t("failed"))); return; }
+    render(data);
   }
 
   form.addEventListener("submit", function (ev) {
