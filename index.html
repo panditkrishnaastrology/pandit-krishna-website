@@ -188,7 +188,7 @@ footer{background:var(--violet-deep);color:var(--lav);padding-block:48px 104px}
 @media (max-width:420px){.bar{gap:10px}.site-header .brand{gap:8px}.site-header .brand svg{width:30px;height:30px}.brand-name b{font-size:22px}.brand-name span{font-size:10px;letter-spacing:.3em}.lang select{min-width:86px;padding:0 6px;font-size:13px}}@media (max-width:350px){.site-header .brand svg{display:none}}
 body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-wrap:anywhere}
 .pk-sub{font-size:1.05rem;margin:22px 0 10px;color:var(--violet)}
-.mh-special b{color:var(--gold-ink)}.mh-why li.mh-sy{font-weight:600}
+.mh-special b{color:var(--gold-ink)}.mh-why li.mh-sy{font-weight:600}.mh-why li.mh-sb{font-weight:600;color:#8A1C1C}
 .mh-day-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px}
 .mh-dl{align-self:flex-start;font:600 14px var(--body);padding:10px 18px;min-height:44px;border-radius:999px;border:1.5px solid var(--violet);background:transparent;color:var(--violet);cursor:pointer}
 .mh-dl:hover{background:var(--violet);color:var(--white)}
@@ -196,24 +196,42 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
 #mhPrint{display:none}
 @media print{
  html.mh-printing body>*:not(#mhPrint){display:none!important}
- html.mh-printing #mhPrint{display:flex;flex-direction:column;gap:14px;font-size:12pt;color:#111}
- html.mh-printing{background:#fff}
- #mhPrint .mhp-table{width:100%;border-collapse:collapse}
- #mhPrint .mhp-table td{padding:0;vertical-align:top}
- #mhPrint .mhp-body{display:flex;flex-direction:column;gap:14px}
- #mhPrint .mhp-head{display:flex;align-items:center;gap:16px;border-bottom:3px solid #D4AF37;padding-bottom:12px}
- #mhPrint .mhp-head .logo{width:72px;height:72px;flex:none}
- #mhPrint .mhp-brand{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
- #mhPrint .mhp-brand b{font:700 22pt/1.1 var(--display);color:#2A1650}
- #mhPrint .mhp-brand .mhp-tag{font-size:10.5pt;font-weight:600;color:#6B4F00}
- #mhPrint .mhp-brand span{font-size:9.5pt;color:#444}
- #mhPrint .mhp-date{align-self:flex-start;font-size:9.5pt;color:#444;white-space:nowrap}
- #mhPrint .mhp-foot{padding-top:10px!important;border-top:1px solid #D4AF37;font-size:9pt;color:#444;text-align:center}
+ html.mh-printing,html.mh-printing body{background:#fff!important}
+ html.mh-printing #mhPrint{display:block;color:#1a1a1a;font:9.5pt/1.4 var(--body)}
+ #mhPrint table{width:100%;border-collapse:collapse}
+ #mhPrint .mhp-frame>tbody>tr>td{padding:0;vertical-align:top}
+ #mhPrint .mhp-foot{padding-top:8px;border-top:1px solid #D4AF37;font-size:8.5pt;color:#555;text-align:center}
  #mhPrint .mhp-foot span{display:block}
- #mhPrint .mh-day{break-inside:auto;border:1px solid #ccc;margin-top:14px}
- #mhPrint .mh-win{break-inside:avoid;background:#fff}
- #mhPrint .mh-note{font-size:10pt;color:#444;margin-top:14px}
- @page{margin:14mm}
+ #mhPrint .mhp-head{display:flex;align-items:center;gap:16px;border-bottom:3px solid #D4AF37;padding-bottom:10px}
+ #mhPrint .mhp-head .logo{width:70px;height:70px;flex:none}
+ #mhPrint .mhp-brand{display:flex;flex-direction:column;gap:2px;min-width:0}
+ #mhPrint .mhp-brand b{font:700 21pt/1.1 var(--display);color:#2A1650}
+ #mhPrint .mhp-brand .mhp-tag{font-size:10pt;font-weight:600;color:#6B4F00}
+ #mhPrint .mhp-brand span{font-size:9pt;color:#444}
+ #mhPrint .mhp-title{margin:14px 0 6px}
+ #mhPrint .mhp-title h1{margin:0 0 4px;font:700 16pt/1.2 var(--display);color:#2A1650}
+ #mhPrint .mhp-meta{margin:2px 0;color:#444}
+ #mhPrint .mhp-notice{margin:6px 0 0;padding:6px 10px;background:#F1ECFA;border-radius:6px;color:#2A1650;font-weight:600}
+ #mhPrint .mhp-notice.mh-warn{background:#FDF0D5;color:#7A4A00}
+ #mhPrint .mhp-day{margin-top:14px;border:1px solid #CFC6B0}
+ #mhPrint .mhp-day thead{display:table-header-group}
+ #mhPrint .mhp-date{background:#2A1650;color:#fff;text-align:left;padding:6px 10px;font:700 12pt var(--display);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ #mhPrint .mhp-col{background:#F4EFE2;text-align:left;padding:4px 8px;font-size:8.5pt;text-transform:uppercase;letter-spacing:.04em;color:#6B4F00;border-bottom:1px solid #CFC6B0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ #mhPrint .mhp-day td{padding:6px 8px;vertical-align:top;border-top:1px solid #E6DFCC}
+ #mhPrint .mhp-day tr{break-inside:avoid}
+ #mhPrint .mhp-info{font-size:8.5pt;color:#444;background:#FBF9F3;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ #mhPrint .mhp-info p{margin:0 0 2px}
+ #mhPrint .mhp-info b{color:#8A1C1C}
+ #mhPrint .mhp-time{font-weight:700;white-space:nowrap;width:1%}
+ #mhPrint .mhp-rate{font-weight:700;color:#2A1650;width:1%;white-space:nowrap}
+ #mhPrint .mhp-rate.ex{color:#6B4F00}
+ #mhPrint .mhp-pan{width:34%}
+ #mhPrint .mhp-why div{margin:0 0 1px}
+ #mhPrint .mhp-why .mh-sy{font-weight:700;color:#1D6B3A}
+ #mhPrint .mhp-why .mh-sb{font-weight:700;color:#8A1C1C}
+ #mhPrint .mhp-none{color:#666;font-style:italic}
+ #mhPrint .mhp-note{margin-top:14px;font-size:8.5pt;color:#555;break-inside:avoid}
+ @page{size:A4;margin:12mm}
 }
 /* muhurta finder */
 /* muhurta promotion */

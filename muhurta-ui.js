@@ -42,7 +42,8 @@
     "tara.Sadhaka": "Sadhaka", "tara.Naidhana": "Naidhana", "tara.Mitra": "Mitra", "tara.Parama Mitra": "Parama Mitra", "F_yoga": "{1} yoga", "F_kar": "{1} karana",
     "dl_all": "Save all 7 days as PDF", "dl_day": "Save this day as PDF",
     "prepd": "Prepared on {1}", "pdf": "Auspicious times",
-    "tag": "Vedic, Nadi and Prasna Jyotish · Vedic Numerology", "pf": "For a personal muhurta based on your full birth chart, contact Pandit Krishna.",
+    "tag": "Vedic, Nadi and Prasna Jyotish · Vedic Numerology",
+    "det": "Lagna: {1} · Rashi: {2} · Nakshatra: {3}", "c_time": "Time (IST)", "c_rate": "Rating", "c_pan": "Panchang at that time", "c_why": "Notes", "pf": "For a personal muhurta based on your full birth chart, contact Pandit Krishna.",
     "loading": "Loading…", "failed": "The times could not be loaded. Please check your connection and try again."
   };
   var LV = ["Good", "Very good", "Excellent"];
@@ -142,6 +143,31 @@
     return { days: days, wins: wins };
   }
 
+  function factsOf(w) {
+    return [t("F_lagna", [name(w[4])]), t("F_moon", [name(w[5])]), w[10] ? t("F_nakT", [name(w[6]), t("tara." + w[10])]) : t("F_nak", [name(w[6])]),
+      name(w[7]), t("F_yoga", [name(w[8])]), t("F_kar", [name(w[9])])];
+  }
+  function whyOf(w, d) {
+    var res = [];
+    d.special.filter(function (x) { return x[2] < w[2] && x[3] > w[1]; }).forEach(function (x) {
+      res.push({ s: t(x[1] === "good" ? "S_good" : x[1] === "bad" ? "S_bad" : "S_mixed", [yname(x[0])]), cls: x[1] === "good" ? "mh-sy" : x[1] === "bad" ? "mh-sb" : null });
+    });
+    (w[11] || []).forEach(function (r) {
+      var k = r[0], s;
+      if (k === "W1" || k === "W3") s = t(k, [name(r[1]), t("p." + r[2])]);
+      else if (k === "W2") s = t(k, [name(r[1])]);
+      else if (k === "W9") s = t(k, [t("tara." + r[1])]);
+      else if (k === "W10" || k === "W12") s = t(k, [ord(r[1])]);
+      else s = t(k, []);
+      res.push({ s: s, cls: null });
+    });
+    return res;
+  }
+  function avoidOf(d) { return d.avoid.map(function (x) { return t("bad." + x[0]) + " " + span(x[1], x[2], d.date); }).join(" · "); }
+  function specialOf(d) { return d.special.map(function (x) { return yname(x[0]) + " " + span(x[2], x[3], d.date); }).join(" · "); }
+  function warnOf(w) { return w[0] === "D1" ? t("D1", [t("dir." + w[1])]) : w[0] === "C2" ? t("C2", []) : t(w[0], [name(w[1])]); }
+  var shown = [], notices = [], countLine = "";
+
   function render(data) {
     if (!last) return;
     if (!data) { out.textContent = ""; out.appendChild(el("p", "mh-none", t("loading"))); return; }
@@ -150,18 +176,19 @@
     data.wins.forEach(function (w) { if (w[2] > now) byDay[w[0]].push(w); });
     var total = byDay.reduce(function (a, d) { return a + d.length; }, 0);
 
-    out.textContent = "";
+    out.textContent = ""; shown = []; notices = [];
     var head = el("div", "mh-res-head"), who = last.name;
     head.appendChild(el("h3", null, who ? t("h_name", [t("p." + purpose), who]) : t("h", [t("p." + purpose)])));
-    head.appendChild(el("p", null, total === 1 && lang() === "en" ? t("count1", []) : total ? t("count", [String(total)]) : t("none7")));
+    countLine = total === 1 && lang() === "en" ? t("count1", []) : total ? t("count", [String(total)]) : t("none7");
+    head.appendChild(el("p", null, countLine));
     var miss = [];
     if (natal.lagna == null) miss.push(t("it.lagna"));
     if (natal.rashi == null) miss.push(t("it.rashi"));
     if (natal.nak == null) miss.push(t("it.nak"));
-    if (miss.length === 3) head.appendChild(el("p", "mh-gen", t("gen")));
-    else if (miss.length) head.appendChild(el("p", "mh-gen", t("partial", [miss.join(t("and"))])));
-    if (purpose === "marriage" && data.days.some(function (d) { return d.jupiter === 4; }))
-      head.appendChild(el("p", "mh-gen mh-warn", t("G1")));
+    if (miss.length === 3) notices.push(["", t("gen")]);
+    else if (miss.length) notices.push(["", t("partial", [miss.join(t("and"))])]);
+    if (purpose === "marriage" && data.days.some(function (d) { return d.jupiter === 4; })) notices.push([" mh-warn", t("G1")]);
+    notices.forEach(function (n) { head.appendChild(el("p", "mh-gen" + n[0], n[1])); });
     var dlAll = el("button", "mh-dl", t("dl_all")); dlAll.type = "button"; dlAll.setAttribute("data-mh-dl", "all");
     head.appendChild(dlAll);
     out.appendChild(head);
@@ -169,20 +196,20 @@
     data.days.forEach(function (d, di) {
       var dayEnd = d.avoid.reduce(function (a, x) { return Math.max(a, x[2]); }, 0);
       if (dayEnd && dayEnd < now && !byDay[di].length) return;   // a day that is already over
+      shown.push({ d: d, di: di, wins: byDay[di] });
       var box = el("div", "mh-day"), top = el("div", "mh-day-top");
       top.appendChild(el("h4", null, name(d.label)));
       var dl = el("button", "mh-dl mh-dl-s", t("dl_day")); dl.type = "button"; dl.setAttribute("data-mh-dl", String(di));
       top.appendChild(dl); box.appendChild(top); box.setAttribute("data-mh-day", String(di));
-      var parts = d.avoid.map(function (x) { return t("bad." + x[0]) + " " + span(x[1], x[2], d.date); });
       var av = el("p", "mh-avoid"); av.appendChild(el("b", null, t("avoid") + " "));
-      av.appendChild(document.createTextNode(num(parts.join(" · ")))); box.appendChild(av);
+      av.appendChild(document.createTextNode(num(avoidOf(d)))); box.appendChild(av);
       if (d.special.length) {
         var sp = el("p", "mh-avoid mh-special"); sp.appendChild(el("b", null, t("special") + " "));
-        sp.appendChild(document.createTextNode(num(d.special.map(function (x) { return yname(x[0]) + " " + span(x[2], x[3], d.date); }).join(" · "))));
+        sp.appendChild(document.createTextNode(num(specialOf(d))));
         box.appendChild(sp);
       }
       d.warn.forEach(function (w) {
-        box.appendChild(el("p", "mh-avoid", w[0] === "D1" ? t("D1", [t("dir." + w[1])]) : w[0] === "C2" ? t("C2", []) : t(w[0], [name(w[1])])));
+        box.appendChild(el("p", "mh-avoid", warnOf(w)));
       });
       if (!byDay[di].length) box.appendChild(el("p", "mh-none", t("noday")));
       byDay[di].forEach(function (w) {
@@ -192,23 +219,12 @@
         top.appendChild(el("span", "mh-badge" + (level === "Excellent" ? " ex" : ""), t("lv." + level)));
         c.appendChild(top);
         var chips = el("div", "mh-facts");
-        [t("F_lagna", [name(w[4])]), t("F_moon", [name(w[5])]), w[10] ? t("F_nakT", [name(w[6]), t("tara." + w[10])]) : t("F_nak", [name(w[6])]),
-          name(w[7]), t("F_yoga", [name(w[8])]), t("F_kar", [name(w[9])])]
-          .forEach(function (x) { chips.appendChild(el("span", null, x)); });
+        factsOf(w).forEach(function (x) { chips.appendChild(el("span", null, x)); });
         c.appendChild(chips);
-        var sy = d.special.filter(function (x) { return x[2] < w[2] && x[3] > w[1]; });
-        if ((w[11] && w[11].length) || sy.length) {
+        var why = whyOf(w, d);
+        if (why.length) {
           var ul = el("ul", "mh-why");
-          sy.forEach(function (x) { ul.appendChild(el("li", x[1] === "good" ? "mh-sy" : null, t(x[1] === "good" ? "S_good" : x[1] === "bad" ? "S_bad" : "S_mixed", [yname(x[0])]))); });
-          (w[11] || []).forEach(function (r) {
-            var k = r[0], s;
-            if (k === "W1" || k === "W3") s = t(k, [name(r[1]), t("p." + r[2])]);
-            else if (k === "W2") s = t(k, [name(r[1])]);
-            else if (k === "W9") s = t(k, [t("tara." + r[1])]);
-            else if (k === "W10" || k === "W12") s = t(k, [ord(r[1])]);
-            else s = t(k, []);
-            ul.appendChild(el("li", null, s));
-          });
+          why.forEach(function (r) { ul.appendChild(el("li", r.cls, r.s)); });
           c.appendChild(ul);
         }
         box.appendChild(c);
@@ -239,41 +255,73 @@
   function savePdf(which) {
     var old = document.getElementById("mhPrint"); if (old) old.remove();
     var pr = document.createElement("div"); pr.id = "mhPrint"; pr.setAttribute("data-noi18n", "");
+    function raw(tag, cls, txt) { var s = document.createElement(tag); if (cls) s.className = cls; s.textContent = txt; return s; }
+    function cell(tag, cls, txt, span) { var c = el(tag, cls, txt); if (span) c.colSpan = span; return c; }
     var now = new Date(Date.now() + 19800000);
     var when = name(now.getUTCDate() + " " + MON[now.getUTCMonth()]) + " " + now.getUTCFullYear();
+
+    /* page frame: the footer repeats on every page */
+    var frame = document.createElement("table"); frame.className = "mhp-frame";
+    var tf = document.createElement("tfoot"), tb = document.createElement("tbody");
+    var fr = document.createElement("tr"), fc = document.createElement("td"); fc.className = "mhp-foot";
+    fc.appendChild(el("span", null, t("pf")));
+    fc.appendChild(raw("span", null, "Pandit Krishna Astrology  ·  +91 96680 24876  ·  panditkrishnaastrology.com"));
+    fr.appendChild(fc); tf.appendChild(fr);
+    var br = document.createElement("tr"), body = document.createElement("td"); br.appendChild(body); tb.appendChild(br);
+    frame.appendChild(tf); frame.appendChild(tb); pr.appendChild(frame);
+
     /* letterhead */
     var hd = el("div", "mhp-head"), logo = document.querySelector(".site-header .logo");
-    if (logo) { var lg2 = logo.cloneNode(true); lg2.setAttribute("width", "72"); lg2.setAttribute("height", "72"); hd.appendChild(lg2); }
+    if (logo) { var lg2 = logo.cloneNode(true); lg2.setAttribute("width", "70"); lg2.setAttribute("height", "70"); hd.appendChild(lg2); }
     var bt = el("div", "mhp-brand");
-    bt.appendChild(el("b", null, "Pandit Krishna Astrology"));
+    bt.appendChild(raw("b", null, "Pandit Krishna Astrology"));
     bt.appendChild(el("span", "mhp-tag", t("tag")));
-    /* contact details are kept exactly as written (no digit conversion) */
-    function raw(txt) { var s = document.createElement("span"); s.textContent = txt; return s; }
-    bt.appendChild(raw("Lane-7, Mallik Complex, Jagamara, Bhubaneswar, Odisha – 751030"));
-    bt.appendChild(raw("Phone / WhatsApp: +91 96680 24876"));
-    bt.appendChild(raw("Email: panditkrishnaastrology2026@gmail.com"));
-    bt.appendChild(raw("Web: panditkrishnaastrology.com"));
-    hd.appendChild(bt);
-    hd.appendChild(el("span", "mhp-date", t("prepd", [when])));
-    /* footer, repeated on every page (table footer) */
-    var tbl = document.createElement("table"), tf = document.createElement("tfoot"), tb = document.createElement("tbody");
-    var fr = document.createElement("tr"), fc = document.createElement("td"), br = document.createElement("tr"), bc = document.createElement("td");
-    fc.className = "mhp-foot";
-    fc.appendChild(el("span", null, t("pf")));
-    var fl = document.createElement("span"); fl.textContent = "Pandit Krishna Astrology  ·  +91 96680 24876  ·  panditkrishnaastrology.com"; fc.appendChild(fl);
-    fr.appendChild(fc); tf.appendChild(fr); br.appendChild(bc); tb.appendChild(br);
-    tbl.appendChild(tf); tbl.appendChild(tb); tbl.className = "mhp-table"; pr.appendChild(tbl);
-    var body = el("div", "mhp-body"); bc.appendChild(body);
-    body.appendChild(hd);
-    var head = out.querySelector(".mh-res-head");
-    if (head) body.appendChild(head.cloneNode(true));
-    out.querySelectorAll(".mh-day").forEach(function (b) {
-      if (which === "all" || b.getAttribute("data-mh-day") === which) body.appendChild(b.cloneNode(true));
+    bt.appendChild(raw("span", null, "Lane-7, Mallik Complex, Jagamara, Bhubaneswar, Odisha – 751030"));
+    bt.appendChild(raw("span", null, "Phone / WhatsApp: +91 96680 24876  ·  Email: panditkrishnaastrology2026@gmail.com"));
+    bt.appendChild(raw("span", null, "Web: panditkrishnaastrology.com"));
+    hd.appendChild(bt); body.appendChild(hd);
+
+    /* title block */
+    var tl = el("div", "mhp-title");
+    tl.appendChild(el("h1", null, last.name ? t("h_name", [t("p." + last.purpose), last.name]) : t("h", [t("p." + last.purpose)])));
+    var nat = last.natal, nk = function (v, f) { return v == null ? t("notknown") : f(v); };
+    tl.appendChild(el("p", "mhp-meta", t("det", [nk(nat.lagna, function (v) { return name(RS[v]); }), nk(nat.rashi, function (v) { return name(RS[v]); }), nk(nat.nak, function (v) { return name(NAK[v]); })])
+      + "  ·  " + t("prepd", [when])));
+    tl.appendChild(el("p", "mhp-meta", countLine));
+    notices.forEach(function (n) { tl.appendChild(el("p", "mhp-notice" + n[0], n[1])); });
+    body.appendChild(tl);
+
+    /* one table per day; its date band repeats if the day runs onto the next page */
+    shown.forEach(function (s) {
+      if (which !== "all" && String(s.di) !== which) return;
+      var d = s.d, tbl = document.createElement("table"); tbl.className = "mhp-day";
+      var th = document.createElement("thead"), r1 = document.createElement("tr"), r2 = document.createElement("tr");
+      r1.appendChild(cell("th", "mhp-date", name(d.label) + " " + d.date.slice(0, 4), 4));
+      [t("c_time"), t("c_rate"), t("c_pan"), t("c_why")].forEach(function (x) { r2.appendChild(cell("th", "mhp-col", x)); });
+      th.appendChild(r1); th.appendChild(r2); tbl.appendChild(th);
+      var tbd = document.createElement("tbody");
+      var info = document.createElement("tr"), ic = document.createElement("td"); ic.colSpan = 4; ic.className = "mhp-info";
+      var pa = el("p", null); pa.appendChild(el("b", null, t("avoid") + " ")); pa.appendChild(document.createTextNode(num(avoidOf(d)))); ic.appendChild(pa);
+      if (d.special.length) { var ps = el("p", null); ps.appendChild(el("b", null, t("special") + " ")); ps.appendChild(document.createTextNode(num(specialOf(d)))); ic.appendChild(ps); }
+      d.warn.forEach(function (w) { ic.appendChild(el("p", null, warnOf(w))); });
+      info.appendChild(ic); tbd.appendChild(info);
+      if (!s.wins.length) { var nr = document.createElement("tr"); nr.appendChild(cell("td", "mhp-none", t("noday"), 4)); tbd.appendChild(nr); }
+      s.wins.forEach(function (w) {
+        var tr = document.createElement("tr"), lv = LV[w[3]];
+        tr.appendChild(cell("td", "mhp-time", span(w[1], w[2], d.date)));
+        tr.appendChild(cell("td", "mhp-rate" + (lv === "Excellent" ? " ex" : ""), t("lv." + lv)));
+        tr.appendChild(cell("td", "mhp-pan", factsOf(w).join(" · ")));
+        var wc = document.createElement("td"); wc.className = "mhp-why";
+        whyOf(w, d).forEach(function (r) { wc.appendChild(el("div", r.cls, r.s)); });
+        tr.appendChild(wc); tbd.appendChild(tr);
+      });
+      tbl.appendChild(tbd); body.appendChild(tbl);
     });
+
     var note = document.querySelector('[data-view="muhurta"] .mh-note');
-    if (note) body.appendChild(note.cloneNode(true));
-    pr.querySelectorAll(".mh-dl").forEach(function (b) { b.remove(); });
+    if (note) { var nn = note.cloneNode(true); nn.className = "mhp-note"; body.appendChild(nn); }
     document.body.appendChild(pr);
+
     var title = document.title;
     document.title = t("pdf") + " – " + (last.name ? last.name + " – " : "") + t("p." + last.purpose) + " | Pandit Krishna Astrology";
     document.documentElement.classList.add("mh-printing");
