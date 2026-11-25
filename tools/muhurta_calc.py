@@ -5,7 +5,7 @@ Pandit Krishna Astrology — data for "Know your auspicious time" (muhurta finde
 For N days from today (IST), sunrise to next sunrise at Bhubaneswar, it lists
 every change of: tithi, nakshatra, yoga, karana, Moon's rashi and the rising
 lagna (sidereal, Lahiri), plus Rahu Kaal, Yamaganda, Gulika, Durmuhurta, Abhijit and the special
-yogas (Sarvartha Siddhi and others; the inauspicious ones are added to "bad"), and the signs of the nine grahas at sunrise (with combustion).
+yogas (Sarvartha Siddhi, Mrityu and others; shown only, never used to reject a time), and the signs of the nine grahas at sunrise (with combustion).
 The page's script combines these with the visitor's lagna, rashi and
 nakshatra to find suitable windows. Times are Unix seconds.
 
@@ -134,10 +134,9 @@ def day_data(date):
             "Durmuhurta": [[unix(sr + (n - 1) * mu), unix(sr + n * mu)] for n in DURMUHURTA[wd]],
             "Varjyam": varjyam,
             "Gandanta": gandanta,
-            **{n: [[unix(x[2]), unix(x[3])] for x in specials if x[0] == n]
-               for n in {x[0] for x in specials if x[1] == "bad"}},
         },
-        "special": [[n, k, unix(a), unix(b)] for n, k, a, b in specials if k != "bad"],
+        # special yogas are shown only; they do not remove any time (owner's decision)
+        "special": [[n, k, unix(a), unix(b)] for n, k, a, b in specials],
         "masa": masa, "chaturmas": chaturmas,
         "abhijit": None if wd == 3 else [unix(sr + 7 * mu), unix(sr + 8 * mu)],
         "planets": planets,

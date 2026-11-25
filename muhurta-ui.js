@@ -24,7 +24,7 @@
     "avoid": "Avoid:", "bad.Rahu Kaal": "Rahu Kaal", "bad.Yamaganda": "Yamaganda", "bad.Gulika Kaal": "Gulika Kaal", "bad.Durmuhurta": "Durmuhurta",
     "bad.Varjyam": "Varjyam", "bad.Gandanta": "Gandanta",
     "bad.Mrityu Yoga": "Mrityu Yoga", "bad.Utpata Yoga": "Utpata Yoga", "bad.Yamaghanta Yoga": "Yamaghanta Yoga", "bad.Dagdha Yoga": "Dagdha Yoga", "bad.Visha Yoga": "Visha Yoga",
-    "special": "Special yogas:", "S_good": "{1} (auspicious yoga)", "S_mixed": "{1}: the result of the act repeats",
+    "special": "Special yogas:", "S_good": "{1} (auspicious yoga)", "S_bad": "{1} (inauspicious yoga)", "S_mixed": "{1}: the result of the act repeats",
     "noday": "No suitable time on this day.",
     "D1": "Disha shool: avoid starting a journey towards the {1} today.",
     "dir.East": "East", "dir.West": "West", "dir.North": "North", "dir.South": "South",
@@ -192,7 +192,7 @@
         var sy = d.special.filter(function (x) { return x[2] < w[2] && x[3] > w[1]; });
         if ((w[11] && w[11].length) || sy.length) {
           var ul = el("ul", "mh-why");
-          sy.forEach(function (x) { ul.appendChild(el("li", x[1] === "good" ? "mh-sy" : null, t(x[1] === "good" ? "S_good" : "S_mixed", [yname(x[0])]))); });
+          sy.forEach(function (x) { ul.appendChild(el("li", x[1] === "good" ? "mh-sy" : null, t(x[1] === "good" ? "S_good" : x[1] === "bad" ? "S_bad" : "S_mixed", [yname(x[0])]))); });
           (w[11] || []).forEach(function (r) {
             var k = r[0], s;
             if (k === "W1" || k === "W3") s = t(k, [name(r[1]), t("p." + r[2])]);
