@@ -23,6 +23,8 @@
     "it.lagna": "lagna", "it.rashi": "rashi", "it.nak": "nakshatra", "and": " and ",
     "avoid": "Avoid:", "bad.Rahu Kaal": "Rahu Kaal", "bad.Yamaganda": "Yamaganda", "bad.Gulika Kaal": "Gulika Kaal", "bad.Durmuhurta": "Durmuhurta",
     "bad.Varjyam": "Varjyam", "bad.Gandanta": "Gandanta",
+    "bad.Mrityu Yoga": "Mrityu Yoga", "bad.Utpata Yoga": "Utpata Yoga", "bad.Yamaghanta Yoga": "Yamaghanta Yoga", "bad.Dagdha Yoga": "Dagdha Yoga",
+    "special": "Special yogas:", "S_good": "{1} (auspicious yoga)", "S_mixed": "{1}: the result of the act repeats",
     "noday": "No suitable time on this day.",
     "D1": "Disha shool: avoid starting a journey towards the {1} today.",
     "dir.East": "East", "dir.West": "West", "dir.North": "North", "dir.South": "South",
@@ -56,6 +58,7 @@
     return s.replace(/\{(\d)\}/g, function (m, n) { return args[+n - 1]; });
   }
   function name(x) { var d = dict(); return d ? d.phrase(String(x)) : String(x); }
+  function yname(x) { var d = dict(); return (d && d.text && d.text[x]) || name(x); }
   function ord(n) {
     if (lang() !== "en") return String(n);
     var s = n % 100 > 10 && n % 100 < 14 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" })[n % 10] || "th";
@@ -121,7 +124,7 @@
     if (!F || !D || !D.days || !D.days.length) throw new Error("data");
     var res = F.find({ lagna: natal.lagna, rashi: natal.rashi, nak: natal.nak }, purpose, D.days[0].sunrise - 1);
     var wins = [], days = res.map(function (d) {
-      return { date: d.day.date, label: d.day.label, jupiter: d.day.planets.jupiter.sign, warn: d.warn,
+      return { date: d.day.date, label: d.day.label, jupiter: d.day.planets.jupiter.sign, warn: d.warn, special: d.day.special || [],
         avoid: Object.keys(d.day.bad).reduce(function (a, k) {
           var v = d.day.bad[k]; (typeof v[0] === "number" ? [v] : v).forEach(function (s) { a.push([k, s[0], s[1]]); }); return a;
         }, []) };
@@ -166,6 +169,11 @@
       var parts = d.avoid.map(function (x) { return t("bad." + x[0]) + " " + span(x[1], x[2], d.date); });
       var av = el("p", "mh-avoid"); av.appendChild(el("b", null, t("avoid") + " "));
       av.appendChild(document.createTextNode(num(parts.join(" · ")))); box.appendChild(av);
+      if (d.special.length) {
+        var sp = el("p", "mh-avoid mh-special"); sp.appendChild(el("b", null, t("special") + " "));
+        sp.appendChild(document.createTextNode(num(d.special.map(function (x) { return yname(x[0]) + " " + span(x[2], x[3], d.date); }).join(" · "))));
+        box.appendChild(sp);
+      }
       d.warn.forEach(function (w) {
         box.appendChild(el("p", "mh-avoid", w[0] === "D1" ? t("D1", [t("dir." + w[1])]) : w[0] === "C2" ? t("C2", []) : t(w[0], [name(w[1])])));
       });
@@ -181,9 +189,11 @@
           name(w[7]), t("F_yoga", [name(w[8])]), t("F_kar", [name(w[9])])]
           .forEach(function (x) { chips.appendChild(el("span", null, x)); });
         c.appendChild(chips);
-        if (w[11] && w[11].length) {
+        var sy = d.special.filter(function (x) { return x[2] < w[2] && x[3] > w[1]; });
+        if ((w[11] && w[11].length) || sy.length) {
           var ul = el("ul", "mh-why");
-          w[11].forEach(function (r) {
+          sy.forEach(function (x) { ul.appendChild(el("li", x[1] === "good" ? "mh-sy" : null, t(x[1] === "good" ? "S_good" : "S_mixed", [yname(x[0])]))); });
+          (w[11] || []).forEach(function (r) {
             var k = r[0], s;
             if (k === "W1" || k === "W3") s = t(k, [name(r[1]), t("p." + r[2])]);
             else if (k === "W2") s = t(k, [name(r[1])]);

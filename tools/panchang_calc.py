@@ -358,6 +358,93 @@ def upcoming_ingresses(jd0, days=45):
     return out
 
 
+
+# ---- special yogas (vara with nakshatra or tithi), Muhurta Chintamani tables ----
+# nakshatra numbers 0..26 (Ashwini..Revati); weekdays Sun=0
+_N = {n: i for i, n in enumerate(["Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra", "Punarvasu", "Pushya",
+      "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni", "Hasta", "Chitra", "Swati", "Vishakha", "Anuradha", "Jyeshtha",
+      "Mula", "Purva Ashadha", "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha", "Purva Bhadrapada",
+      "Uttara Bhadrapada", "Revati"])}
+
+
+def _ns(*names):
+    return [_N[n] for n in names]
+
+
+SARVARTHA = {0: _ns("Hasta", "Mula", "Uttara Phalguni", "Uttara Ashadha", "Uttara Bhadrapada", "Pushya", "Ashwini"),
+             1: _ns("Shravana", "Rohini", "Mrigashira", "Pushya", "Anuradha"),
+             2: _ns("Ashwini", "Uttara Bhadrapada", "Krittika", "Ashlesha"),
+             3: _ns("Rohini", "Anuradha", "Hasta", "Krittika", "Mrigashira"),
+             4: _ns("Revati", "Anuradha", "Ashwini", "Punarvasu", "Pushya"),
+             5: _ns("Revati", "Anuradha", "Ashwini", "Punarvasu", "Shravana"),
+             6: _ns("Shravana", "Rohini", "Swati")}
+AMRITA = dict(enumerate(_ns("Hasta", "Mrigashira", "Ashwini", "Anuradha", "Pushya", "Revati", "Rohini")))
+MRITYU = dict(enumerate(_ns("Anuradha", "Uttara Ashadha", "Shatabhisha", "Ashwini", "Mrigashira", "Ashlesha", "Hasta")))
+UTPATA = dict(enumerate(_ns("Vishakha", "Purva Ashadha", "Dhanishta", "Revati", "Rohini", "Pushya", "Uttara Phalguni")))
+YAMAGHANTA = dict(enumerate(_ns("Magha", "Vishakha", "Ardra", "Mula", "Krittika", "Rohini", "Hasta")))
+DAGDHA = {0: [12], 1: [11], 2: [5], 3: [2, 3], 4: [6], 5: [8], 6: [9]}   # tithi number in the paksha
+RAVI_YOGA = [4, 6, 9, 10, 13, 20]          # Moon's nakshatra counted from the Sun's
+DWIPADA = _ns("Mrigashira", "Chitra", "Dhanishta")
+TRIPADA = _ns("Krittika", "Punarvasu", "Uttara Phalguni", "Vishakha", "Uttara Ashadha", "Purva Bhadrapada")
+YOGA_KIND = {"Sarvartha Siddhi Yoga": "good", "Amrita Siddhi Yoga": "good", "Ravi Yoga": "good",
+             "Guru Pushya Yoga": "good", "Ravi Pushya Yoga": "good",
+             "Dwipushkar Yoga": "mixed", "Tripushkar Yoga": "mixed",
+             "Mrityu Yoga": "bad", "Utpata Yoga": "bad", "Yamaghanta Yoga": "bad", "Dagdha Yoga": "bad"}
+
+
+def _spans(kind, a, b):
+    out, jd = [], a
+    while jd < b:
+        idx, end = segment_end(kind, jd)
+        out.append((idx, jd, min(end, b)))
+        jd = end + 1e-6
+    return out
+
+
+def special_yogas(sr, sr_next, weekday):
+    """[(name, kind, start_jd, end_jd)] for the vara from sunrise to the next sunrise."""
+    naks, tithis, found = _spans("nakshatra", sr, sr_next), _spans("tithi", sr, sr_next), []
+
+    def add(name, a, b):
+        if b - a < 1 / 1440:
+            return
+        if found and found[-1][0] == name and abs(found[-1][3] - a) < 1 / 1440:
+            found[-1] = (name, found[-1][1], found[-1][2], b)    # join touching spans
+        else:
+            found.append((name, YOGA_KIND[name], a, b))
+
+    for n, a, b in naks:
+        if n in SARVARTHA[weekday]:
+            add("Sarvartha Siddhi Yoga", a, b)
+    for n, a, b in naks:
+        if n == AMRITA[weekday]:
+            add("Amrita Siddhi Yoga", a, b)
+        if n == _N["Pushya"] and weekday == 4:
+            add("Guru Pushya Yoga", a, b)
+        if n == _N["Pushya"] and weekday == 0:
+            add("Ravi Pushya Yoga", a, b)
+    for n, a, b in naks:
+        sun_nak = int(lon(a + (b - a) / 2, swe.SUN)[0] // (360 / 27))
+        if (n - sun_nak) % 27 + 1 in RAVI_YOGA:
+            add("Ravi Yoga", a, b)
+    if weekday in (0, 2, 6):
+        for t, ta, tb in tithis:
+            if t % 15 + 1 in (2, 7, 12):
+                for n, a, b in naks:
+                    lo, hi = max(a, ta), min(b, tb)
+                    if hi > lo and n in DWIPADA:
+                        add("Dwipushkar Yoga", lo, hi)
+                    if hi > lo and n in TRIPADA:
+                        add("Tripushkar Yoga", lo, hi)
+    for name, table in (("Mrityu Yoga", MRITYU), ("Utpata Yoga", UTPATA), ("Yamaghanta Yoga", YAMAGHANTA)):
+        for n, a, b in naks:
+            if n == table[weekday]:
+                add(name, a, b)
+    for t, a, b in tithis:
+        if t % 15 + 1 in DAGDHA[weekday] and t % 15 != 14:
+            add("Dagdha Yoga", a, b)
+    return found
+
 def day_panchang(date):
     """Panchang for one civil date (IST) at Bhubaneswar."""
     midnight = datetime(date.year, date.month, date.day, tzinfo=IST)
@@ -434,8 +521,13 @@ def day_panchang(date):
 
     hora = {"day": hora_rows(sr, day_len, 0), "night": hora_rows(ss, night_len, 12)}
 
+    specials = [{"name": n, "kind": k, "time": f"{fmt_t(a, date)} – {fmt_t(b, date)}",
+                 "whole": a - sr < 1 / 1440 and sr_next - b < 1 / 1440}
+                for n, k, a, b in special_yogas(sr, sr_next, weekday)]
+
     return {
         "planet_note": note,
+        "special_yogas": specials,
         "hora": hora,
         "date": date.isoformat(),
         "date_label": midnight.strftime("%A, %d %B %Y").replace(" 0", " "),

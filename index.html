@@ -187,6 +187,8 @@ footer{background:var(--violet-deep);color:var(--lav);padding-block:48px 104px}
 .foot-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-top:24px}.foot-bottom p{padding-top:0!important;min-width:0;overflow-wrap:anywhere}.social{display:flex;gap:12px}.soc{width:44px;height:44px;border-radius:50%;background:var(--ivory);display:inline-flex;align-items:center;justify-content:center;transition:transform .15s}.soc:hover{transform:translateY(-2px)}.soc:focus-visible,.pill:focus-visible{outline:3px solid var(--gold);outline-offset:3px}.yt{color:#E00000}.fb{color:#1877F2}.ig{color:#C13584}.soc-link{display:inline-flex;align-items:center;gap:8px}.soc-link.yt,.soc-link.fb,.soc-link.ig{color:var(--violet)}.soc-link.ig svg{color:#C13584}.soc-link.yt svg{color:#E00000}.soc-link.fb svg{color:#1877F2}.soc-link svg{flex:none}.follow{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}.pill{display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:0 20px;border-radius:999px;background:var(--white);border:1px solid var(--line);text-decoration:none;font-weight:600}.pill span{color:var(--violet)}.pill:hover{border-color:currentColor}
 @media (max-width:420px){.bar{gap:10px}.site-header .brand{gap:8px}.site-header .brand svg{width:30px;height:30px}.brand-name b{font-size:22px}.brand-name span{font-size:10px;letter-spacing:.3em}.lang select{min-width:86px;padding:0 6px;font-size:13px}}@media (max-width:350px){.site-header .brand svg{display:none}}
 body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-wrap:anywhere}
+.pk-sub{font-size:1.05rem;margin:22px 0 10px;color:var(--violet)}
+.mh-special b{color:var(--gold-ink)}.mh-why li.mh-sy{font-weight:600}
 /* muhurta finder */
 /* muhurta promotion */
 .nav a.nav-star{color:var(--gold);font-weight:600;white-space:nowrap}
@@ -652,7 +654,8 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
   <summary>How we choose the times</summary>
   <ul>
    <li>Panchanga shuddhi: the tithi, nakshatra, yoga, karana and weekday must suit the purpose. Rikta tithis (Chaturthi, Navami, Chaturdashi), Amavasya, Vishti (Bhadra) karana and the Vyatipata and Vaidhriti yogas are avoided.</li>
-   <li>Inauspicious periods are avoided: Rahu Kaal, Yamaganda, Gulika Kaal, Durmuhurta, Varjyam and Gandanta.</li>
+   <li>Inauspicious periods are avoided: Rahu Kaal, Yamaganda, Gulika Kaal, Durmuhurta, Varjyam and Gandanta, and the Mrityu, Utpata, Yamaghanta and Dagdha yogas.</li>
+   <li>Special auspicious yogas are shown with the times they cover: Sarvartha Siddhi, Amrita Siddhi, Ravi, Guru Pushya and Ravi Pushya. Dwipushkar and Tripushkar yogas are also shown; in them the result of an act repeats.</li>
    <li>Tara bala and Chandra bala are checked from your birth nakshatra and rashi. Vipat, Pratyak and Naidhana taras are avoided.</li>
    <li>Lagna shuddhi: the rising lagna should suit the purpose, and the Moon should not be in the 6th or 8th from it. Jupiter or Venus in a kendra strengthens the time; malefics in the 1st or 8th weaken it. Abhijit muhurta adds strength.</li>
    <li>Marriage: only the marriage nakshatras; the 7th and 8th houses from the lagna must be empty; no marriage during Chaturmas, Kharmas, or when Jupiter or Venus is combust.</li>
@@ -980,7 +983,15 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
       ].map(function(r){return '<div><dt class="pk-k">'+r[0]+'</dt><dd'+(r[2]?' data-k="month"':'')+'>'+esc(r[1])+'</dd></div>';}).join("")+'</dl></div>';
       h+='<div class="pk-sec"><div class="pk-sec-head"><h2>Muhurta for the day</h2><p class="muted small">Bhubaneswar, IST</p></div><div class="pk-times">'+
         [["avoid","Rahu Kaal",d.rahu_kaal],["avoid","Yamaganda",d.yamaganda],["avoid","Gulika Kaal",d.gulika],["good","Abhijit Muhurta",d.abhijit==="—"?"Not observed on Wednesday":d.abhijit],["good","Brahma Muhurta",d.brahma_muhurta]]
-        .map(function(t){return '<div class="pk-time '+t[0]+'"><span class="pk-tag">'+(t[0]==="avoid"?"Avoid":"Auspicious")+'</span><span class="pk-k" style="color:var(--violet)">'+t[1]+'</span><b>'+esc(t[2])+'</b></div>';}).join("")+'</div></div>';
+        .map(function(t){return '<div class="pk-time '+t[0]+'"><span class="pk-tag">'+(t[0]==="avoid"?"Avoid":"Auspicious")+'</span><span class="pk-k" style="color:var(--violet)">'+t[1]+'</span><b>'+esc(t[2])+'</b></div>';}).join("")+'</div>';
+      if(d.special_yogas){
+        var sy=d.special_yogas;
+        h+='<h3 class="pk-sub">Special yogas</h3>'+(sy.length?'<div class="pk-times">'+sy.map(function(y){var c=y.kind==="bad"?"avoid":"good";
+          return '<div class="pk-time '+c+'"><span class="pk-tag">'+(y.kind==="bad"?"Avoid":y.kind==="mixed"?"Special":"Auspicious")+'</span><span class="pk-k" style="color:var(--violet)">'+esc(y.name)+'</span><b>'+esc(y.time)+'</b></div>';}).join("")+'</div>'
+          :'<p class="muted small">No special yoga today.</p>')+
+          '<p class="muted small">Sarvartha Siddhi, Amrita Siddhi, Ravi, Guru Pushya and Ravi Pushya yogas are auspicious. Mrityu, Utpata, Yamaghanta and Dagdha yogas are avoided for new work. In Dwipushkar and Tripushkar yogas the result of an act repeats two or three times: good for gains and purchases, avoided for losses, loans and illness.</p>';
+      }
+      h+='</div>';
       if(d.hora){
         var nowS=Date.now()/1000;
         h+='<div class="pk-sec"><div class="pk-sec-head"><h2>Hora lords</h2><p class="muted small">Bhubaneswar, IST</p></div><div class="pk-hora">'+

@@ -4,8 +4,8 @@ Pandit Krishna Astrology — data for "Know your auspicious time" (muhurta finde
 
 For N days from today (IST), sunrise to next sunrise at Bhubaneswar, it lists
 every change of: tithi, nakshatra, yoga, karana, Moon's rashi and the rising
-lagna (sidereal, Lahiri), plus Rahu Kaal, Yamaganda, Gulika, Durmuhurta and
-Abhijit, and the signs of the nine grahas at sunrise (with combustion).
+lagna (sidereal, Lahiri), plus Rahu Kaal, Yamaganda, Gulika, Durmuhurta, Abhijit and the special
+yogas (Sarvartha Siddhi and others; the inauspicious ones are added to "bad"), and the signs of the nine grahas at sunrise (with combustion).
 The page's script combines these with the visitor's lagna, rashi and
 nakshatra to find suitable windows. Times are Unix seconds.
 
@@ -112,6 +112,7 @@ def day_data(date):
     masa = (int(pc.lon(nm, swe.SUN)[0] // 30) + 1) % 12
     chaturmas = (masa == 3 and t_idx >= 10) or masa in (4, 5, 6) or (masa == 7 and t_idx < 10)
 
+    specials = pc.special_yogas(sr, sr2, wd)
     planets = {}
     for p in pc.planet_positions(sr):
         planets[p["key"]] = {"sign": p["rashi_no"] - 1, "combust": p["combust"], "retro": p["retro"]}
@@ -133,7 +134,10 @@ def day_data(date):
             "Durmuhurta": [[unix(sr + (n - 1) * mu), unix(sr + n * mu)] for n in DURMUHURTA[wd]],
             "Varjyam": varjyam,
             "Gandanta": gandanta,
+            **{n: [[unix(x[2]), unix(x[3])] for x in specials if x[0] == n]
+               for n in {x[0] for x in specials if x[1] == "bad"}},
         },
+        "special": [[n, k, unix(a), unix(b)] for n, k, a, b in specials if k != "bad"],
         "masa": masa, "chaturmas": chaturmas,
         "abhijit": None if wd == 3 else [unix(sr + 7 * mu), unix(sr + 8 * mu)],
         "planets": planets,

@@ -67,6 +67,9 @@ def page(d, days, generated, method, canonical_path, is_today):
         f"{' · ' if p.get('retro') and p.get('combust') else ''}{'Combust' if p.get('combust') else ''}</td></tr>"
         for p in d["planets"])
     cities = "".join(f"<tr><td>{e(c['city'])}</td><td>{e(c['sunrise'])}</td><td>{e(c['sunset'])}</td></tr>" for c in d["cities"])
+    specials = "".join(
+        f"<dt>{e(y['name'])}</dt><dd>{e(y['time'])} ({'avoid' if y['kind'] == 'bad' else 'special' if y['kind'] == 'mixed' else 'auspicious'})</dd>"
+        for y in d.get("special_yogas", []))
     hora = "".join(f"<tr><td>{h['n']}</td><td>{e(h['lord'])}</td><td>{e(h['time'])}</td></tr>" for h in d["hora"]["day"] + d["hora"]["night"])
     links = "".join(
         f"<a href='{x['date']}.html'{' aria-current=\"page\"' if x['date'] == date else ''}>{e(x['date_label'].split(',')[0][:3])}, {int(x['date'][8:])} "
@@ -89,7 +92,7 @@ def page(d, days, generated, method, canonical_path, is_today):
 <div class="card"><h3>Karana</h3>{limb(d['karana'])}</div></div></section>
 <section class="grid">
 <div class="card"><h2>Sun and Moon</h2><dl class="kv"><dt>Sunrise</dt><dd>{e(d['sunrise'])}</dd><dt>Sunset</dt><dd>{e(d['sunset'])}</dd><dt>Moonrise</dt><dd>{e(d['moonrise'])}</dd><dt>Moonset</dt><dd>{e(d['moonset'])}</dd><dt>Moon sign</dt><dd>{e(d['moon_rashi'])}</dd><dt>Sun sign</dt><dd>{e(d['sun_rashi'])}</dd></dl></div>
-<div class="card"><h2>Timings</h2><dl class="kv"><dt>Rahu Kaal</dt><dd>{e(d['rahu_kaal'])}</dd><dt>Yamaganda</dt><dd>{e(d['yamaganda'])}</dd><dt>Gulika</dt><dd>{e(d['gulika'])}</dd><dt>Abhijit</dt><dd>{e(d['abhijit'])}</dd><dt>Brahma muhurta</dt><dd>{e(d['brahma_muhurta'])}</dd></dl></div>
+<div class="card"><h2>Timings</h2><dl class="kv"><dt>Rahu Kaal</dt><dd>{e(d['rahu_kaal'])}</dd><dt>Yamaganda</dt><dd>{e(d['yamaganda'])}</dd><dt>Gulika</dt><dd>{e(d['gulika'])}</dd><dt>Abhijit</dt><dd>{e(d['abhijit'])}</dd><dt>Brahma muhurta</dt><dd>{e(d['brahma_muhurta'])}</dd>{specials}</dl></div>
 <div class="card"><h2>Calendar</h2><dl class="kv"><dt>Month (Amanta)</dt><dd>{e(d['masa_amanta'])}</dd><dt>Month (Purnimanta)</dt><dd>{e(d['masa_purnimanta'])}</dd><dt>Ritu</dt><dd>{e(d['ritu'])}</dd><dt>Ayana</dt><dd>{e(d['ayana'])}</dd><dt>Shaka Samvat</dt><dd>{d['shaka_samvat']}</dd></dl></div>
 </section>
 <section class="card"><h2>Planetary positions</h2><p class="note">Sidereal (Lahiri), at {e(d['positions_at'])}. {e(d['planet_note'])}</p>

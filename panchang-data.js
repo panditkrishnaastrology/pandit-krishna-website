@@ -1,9 +1,23 @@
 window.PK_PANCHANG = {
- "generated": "2026-11-25 12:27 IST",
+ "generated": "2026-11-25 13:46 IST",
  "method": "Swiss Ephemeris, sidereal zodiac, Lahiri (Chitrapaksha) ayanamsa, mean Rahu",
  "days": [
   {
    "planet_note": "The Moon is in Vrishabha, Rohini nakshatra. Retrograde: Saturn in Meena.",
+   "special_yogas": [
+    {
+     "name": "Sarvartha Siddhi Yoga",
+     "kind": "good",
+     "time": "6:01 AM – 6:02 AM, 26 Nov",
+     "whole": true
+    },
+    {
+     "name": "Dagdha Yoga",
+     "kind": "bad",
+     "time": "4:50 PM – 6:02 AM, 26 Nov",
+     "whole": false
+    }
+   ],
    "hora": {
     "day": [
      {
@@ -468,6 +482,14 @@ window.PK_PANCHANG = {
   },
   {
    "planet_note": "The Moon is in Vrishabha, Mrigashira nakshatra, entering Mithuna at 7:11 AM. Retrograde: Saturn in Meena.",
+   "special_yogas": [
+    {
+     "name": "Mrityu Yoga",
+     "kind": "bad",
+     "time": "6:02 AM – 5:47 PM",
+     "whole": false
+    }
+   ],
    "hora": {
     "day": [
      {
@@ -932,6 +954,14 @@ window.PK_PANCHANG = {
   },
   {
    "planet_note": "The Moon is in Mithuna, Ardra nakshatra. Retrograde: Saturn in Meena.",
+   "special_yogas": [
+    {
+     "name": "Sarvartha Siddhi Yoga",
+     "kind": "good",
+     "time": "3:08 PM – 6:03 AM, 28 Nov",
+     "whole": false
+    }
+   ],
    "hora": {
     "day": [
      {
@@ -1391,6 +1421,7 @@ window.PK_PANCHANG = {
   },
   {
    "planet_note": "The Moon is in Mithuna, Punarvasu nakshatra, entering Karka at 7:22 AM. Retrograde: Saturn in Meena.",
+   "special_yogas": [],
    "hora": {
     "day": [
      {
@@ -1860,6 +1891,26 @@ window.PK_PANCHANG = {
   },
   {
    "planet_note": "The Moon is in Karka, Pushya nakshatra. Retrograde: Saturn in Meena.",
+   "special_yogas": [
+    {
+     "name": "Sarvartha Siddhi Yoga",
+     "kind": "good",
+     "time": "6:04 AM – 10:59 AM",
+     "whole": false
+    },
+    {
+     "name": "Ravi Pushya Yoga",
+     "kind": "good",
+     "time": "6:04 AM – 10:59 AM",
+     "whole": false
+    },
+    {
+     "name": "Ravi Yoga",
+     "kind": "good",
+     "time": "10:59 AM – 6:05 AM, 30 Nov",
+     "whole": false
+    }
+   ],
    "hora": {
     "day": [
      {
@@ -2319,6 +2370,14 @@ window.PK_PANCHANG = {
   },
   {
    "planet_note": "The Moon is in Karka, Ashlesha nakshatra, entering Simha at 9:42 AM. Retrograde: Saturn in Meena.",
+   "special_yogas": [
+    {
+     "name": "Ravi Yoga",
+     "kind": "good",
+     "time": "6:05 AM – 9:42 AM",
+     "whole": false
+    }
+   ],
    "hora": {
     "day": [
      {
@@ -2778,6 +2837,7 @@ window.PK_PANCHANG = {
   },
   {
    "planet_note": "The Moon is in Simha, Magha nakshatra. Retrograde: Saturn in Meena.",
+   "special_yogas": [],
    "hora": {
     "day": [
      {
