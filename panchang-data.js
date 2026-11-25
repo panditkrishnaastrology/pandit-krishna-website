@@ -1,5 +1,5 @@
 window.PK_PANCHANG = {
- "generated": "2026-11-25 13:46 IST",
+ "generated": "2026-11-25 13:53 IST",
  "method": "Swiss Ephemeris, sidereal zodiac, Lahiri (Chitrapaksha) ayanamsa, mean Rahu",
  "days": [
   {
@@ -10,12 +10,6 @@ window.PK_PANCHANG = {
      "kind": "good",
      "time": "6:01 AM – 6:02 AM, 26 Nov",
      "whole": true
-    },
-    {
-     "name": "Dagdha Yoga",
-     "kind": "bad",
-     "time": "4:50 PM – 6:02 AM, 26 Nov",
-     "whole": false
     }
    ],
    "hora": {
