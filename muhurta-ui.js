@@ -40,6 +40,8 @@
     "W9": "{1} tara from your birth star", "W10": "Chandra bala: Moon in the {1} from your rashi", "W12": "Moon in the {1} from the muhurta lagna",
     "tara.Janma": "Janma", "tara.Sampat": "Sampat", "tara.Vipat": "Vipat", "tara.Kshema": "Kshema", "tara.Pratyak": "Pratyak",
     "tara.Sadhaka": "Sadhaka", "tara.Naidhana": "Naidhana", "tara.Mitra": "Mitra", "tara.Parama Mitra": "Parama Mitra", "F_yoga": "{1} yoga", "F_kar": "{1} karana",
+    "dl_all": "Save all 7 days as PDF", "dl_day": "Save this day as PDF",
+    "prep": "Prepared on {1} · panditkrishnaastrology.com · WhatsApp +91 96680 24876", "pdf": "Auspicious times",
     "loading": "Loading…", "failed": "The times could not be loaded. Please check your connection and try again."
   };
   var LV = ["Good", "Very good", "Excellent"];
@@ -159,13 +161,17 @@
     else if (miss.length) head.appendChild(el("p", "mh-gen", t("partial", [miss.join(t("and"))])));
     if (purpose === "marriage" && data.days.some(function (d) { return d.jupiter === 4; }))
       head.appendChild(el("p", "mh-gen mh-warn", t("G1")));
+    var dlAll = el("button", "mh-dl", t("dl_all")); dlAll.type = "button"; dlAll.setAttribute("data-mh-dl", "all");
+    head.appendChild(dlAll);
     out.appendChild(head);
 
     data.days.forEach(function (d, di) {
       var dayEnd = d.avoid.reduce(function (a, x) { return Math.max(a, x[2]); }, 0);
       if (dayEnd && dayEnd < now && !byDay[di].length) return;   // a day that is already over
-      var box = el("div", "mh-day");
-      box.appendChild(el("h4", null, name(d.label)));
+      var box = el("div", "mh-day"), top = el("div", "mh-day-top");
+      top.appendChild(el("h4", null, name(d.label)));
+      var dl = el("button", "mh-dl mh-dl-s", t("dl_day")); dl.type = "button"; dl.setAttribute("data-mh-dl", String(di));
+      top.appendChild(dl); box.appendChild(top); box.setAttribute("data-mh-day", String(di));
       var parts = d.avoid.map(function (x) { return t("bad." + x[0]) + " " + span(x[1], x[2], d.date); });
       var av = el("p", "mh-avoid"); av.appendChild(el("b", null, t("avoid") + " "));
       av.appendChild(document.createTextNode(num(parts.join(" · ")))); box.appendChild(av);
@@ -225,6 +231,41 @@
       name: $("mhName").value.trim().slice(0, 40) };
     show();
     out.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  /* save as PDF: the browser prints only the chosen day(s) with a branded header.
+     The PDF is made on the visitor's device; nothing is sent anywhere. */
+  function savePdf(which) {
+    var old = document.getElementById("mhPrint"); if (old) old.remove();
+    var pr = document.createElement("div"); pr.id = "mhPrint"; pr.setAttribute("data-noi18n", "");
+    var hd = el("div", "mhp-head"), logo = document.querySelector(".site-header .logo");
+    if (logo) hd.appendChild(logo.cloneNode(true));
+    var bt = el("div", "mhp-brand"); bt.appendChild(el("b", null, "Pandit Krishna Astrology"));
+    var now = new Date(Date.now() + 19800000);
+    bt.appendChild(el("span", null, t("prep", [name(now.getUTCDate() + " " + MON[now.getUTCMonth()]) + " " + now.getUTCFullYear()])));
+    hd.appendChild(bt); pr.appendChild(hd);
+    var head = out.querySelector(".mh-res-head");
+    if (head) pr.appendChild(head.cloneNode(true));
+    out.querySelectorAll(".mh-day").forEach(function (b) {
+      if (which === "all" || b.getAttribute("data-mh-day") === which) pr.appendChild(b.cloneNode(true));
+    });
+    var note = document.querySelector('[data-view="muhurta"] .mh-note');
+    if (note) pr.appendChild(note.cloneNode(true));
+    pr.querySelectorAll(".mh-dl").forEach(function (b) { b.remove(); });
+    document.body.appendChild(pr);
+    var title = document.title;
+    document.title = t("pdf") + " – " + (last.name ? last.name + " – " : "") + t("p." + last.purpose) + " | Pandit Krishna Astrology";
+    document.documentElement.classList.add("mh-printing");
+    function done() {
+      document.documentElement.classList.remove("mh-printing"); document.title = title;
+      window.removeEventListener("afterprint", done);
+    }
+    window.addEventListener("afterprint", done);
+    setTimeout(function () { window.print(); }, 50);   /* the class only affects printing, so it can stay until afterprint */
+  }
+  out.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("[data-mh-dl]");
+    if (b && last) savePdf(b.getAttribute("data-mh-dl"));
   });
 
   /* links elsewhere on the site can preselect a purpose: data-mh-purpose="marriage" */
