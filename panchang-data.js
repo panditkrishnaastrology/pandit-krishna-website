@@ -1,479 +1,7 @@
 window.PK_PANCHANG = {
- "generated": "2026-11-26 00:58 IST",
+ "generated": "2026-11-27 01:04 IST",
  "method": "Swiss Ephemeris, sidereal zodiac, Lahiri (Chitrapaksha) ayanamsa, mean Rahu",
  "days": [
-  {
-   "planet_note": "The Moon is in Vrishabha, Mrigashira nakshatra, entering Mithuna at 7:11 AM. Retrograde: Saturn in Meena.",
-   "special_yogas": [
-    {
-     "name": "Mrityu Yoga",
-     "kind": "bad",
-     "time": "6:02 AM – 5:47 PM",
-     "whole": false
-    }
-   ],
-   "hora": {
-    "day": [
-     {
-      "n": 1,
-      "key": "jupiter",
-      "lord": "Jupiter (Guru)",
-      "time": "6:02 AM – 6:57 AM",
-      "t0": 1795653150,
-      "t1": 1795656463
-     },
-     {
-      "n": 2,
-      "key": "mars",
-      "lord": "Mars (Mangala)",
-      "time": "6:57 AM – 7:52 AM",
-      "t0": 1795656463,
-      "t1": 1795659777
-     },
-     {
-      "n": 3,
-      "key": "sun",
-      "lord": "Sun (Surya)",
-      "time": "7:52 AM – 8:48 AM",
-      "t0": 1795659777,
-      "t1": 1795663090
-     },
-     {
-      "n": 4,
-      "key": "venus",
-      "lord": "Venus (Shukra)",
-      "time": "8:48 AM – 9:43 AM",
-      "t0": 1795663090,
-      "t1": 1795666403
-     },
-     {
-      "n": 5,
-      "key": "mercury",
-      "lord": "Mercury (Budha)",
-      "time": "9:43 AM – 10:38 AM",
-      "t0": 1795666403,
-      "t1": 1795669717
-     },
-     {
-      "n": 6,
-      "key": "moon",
-      "lord": "Moon (Chandra)",
-      "time": "10:38 AM – 11:33 AM",
-      "t0": 1795669717,
-      "t1": 1795673030
-     },
-     {
-      "n": 7,
-      "key": "saturn",
-      "lord": "Saturn (Shani)",
-      "time": "11:33 AM – 12:29 PM",
-      "t0": 1795673030,
-      "t1": 1795676343
-     },
-     {
-      "n": 8,
-      "key": "jupiter",
-      "lord": "Jupiter (Guru)",
-      "time": "12:29 PM – 1:24 PM",
-      "t0": 1795676343,
-      "t1": 1795679657
-     },
-     {
-      "n": 9,
-      "key": "mars",
-      "lord": "Mars (Mangala)",
-      "time": "1:24 PM – 2:19 PM",
-      "t0": 1795679657,
-      "t1": 1795682970
-     },
-     {
-      "n": 10,
-      "key": "sun",
-      "lord": "Sun (Surya)",
-      "time": "2:19 PM – 3:14 PM",
-      "t0": 1795682970,
-      "t1": 1795686283
-     },
-     {
-      "n": 11,
-      "key": "venus",
-      "lord": "Venus (Shukra)",
-      "time": "3:14 PM – 4:09 PM",
-      "t0": 1795686283,
-      "t1": 1795689597
-     },
-     {
-      "n": 12,
-      "key": "mercury",
-      "lord": "Mercury (Budha)",
-      "time": "4:09 PM – 5:05 PM",
-      "t0": 1795689597,
-      "t1": 1795692910
-     }
-    ],
-    "night": [
-     {
-      "n": 13,
-      "key": "moon",
-      "lord": "Moon (Chandra)",
-      "time": "5:05 PM – 6:09 PM",
-      "t0": 1795692910,
-      "t1": 1795696800
-     },
-     {
-      "n": 14,
-      "key": "saturn",
-      "lord": "Saturn (Shani)",
-      "time": "6:09 PM – 7:14 PM",
-      "t0": 1795696800,
-      "t1": 1795700690
-     },
-     {
-      "n": 15,
-      "key": "jupiter",
-      "lord": "Jupiter (Guru)",
-      "time": "7:14 PM – 8:19 PM",
-      "t0": 1795700690,
-      "t1": 1795704579
-     },
-     {
-      "n": 16,
-      "key": "mars",
-      "lord": "Mars (Mangala)",
-      "time": "8:19 PM – 9:24 PM",
-      "t0": 1795704579,
-      "t1": 1795708469
-     },
-     {
-      "n": 17,
-      "key": "sun",
-      "lord": "Sun (Surya)",
-      "time": "9:24 PM – 10:29 PM",
-      "t0": 1795708469,
-      "t1": 1795712359
-     },
-     {
-      "n": 18,
-      "key": "venus",
-      "lord": "Venus (Shukra)",
-      "time": "10:29 PM – 11:34 PM",
-      "t0": 1795712359,
-      "t1": 1795716249
-     },
-     {
-      "n": 19,
-      "key": "mercury",
-      "lord": "Mercury (Budha)",
-      "time": "11:34 PM – 12:38 AM",
-      "t0": 1795716249,
-      "t1": 1795720139
-     },
-     {
-      "n": 20,
-      "key": "moon",
-      "lord": "Moon (Chandra)",
-      "time": "12:38 AM – 1:43 AM",
-      "t0": 1795720139,
-      "t1": 1795724028
-     },
-     {
-      "n": 21,
-      "key": "saturn",
-      "lord": "Saturn (Shani)",
-      "time": "1:43 AM – 2:48 AM",
-      "t0": 1795724028,
-      "t1": 1795727918
-     },
-     {
-      "n": 22,
-      "key": "jupiter",
-      "lord": "Jupiter (Guru)",
-      "time": "2:48 AM – 3:53 AM",
-      "t0": 1795727918,
-      "t1": 1795731808
-     },
-     {
-      "n": 23,
-      "key": "mars",
-      "lord": "Mars (Mangala)",
-      "time": "3:53 AM – 4:58 AM",
-      "t0": 1795731808,
-      "t1": 1795735698
-     },
-     {
-      "n": 24,
-      "key": "sun",
-      "lord": "Sun (Surya)",
-      "time": "4:58 AM – 6:03 AM",
-      "t0": 1795735698,
-      "t1": 1795739588
-     }
-    ]
-   },
-   "date": "2026-11-26",
-   "date_label": "Thursday, 26 November 2026",
-   "vara": "Guruvara (Thursday)",
-   "sunrise": "6:02 AM",
-   "sunset": "5:05 PM",
-   "moonrise": "6:48 PM",
-   "moonset": "7:46 AM",
-   "paksha": "Krishna Paksha",
-   "tithi": [
-    {
-     "name": "Krishna Dwitiya",
-     "till": "1:15 PM",
-     "beyond": false
-    },
-    {
-     "name": "Krishna Tritiya",
-     "till": "9:49 AM, 27 Nov",
-     "beyond": true
-    }
-   ],
-   "nakshatra": [
-    {
-     "name": "Mrigashira",
-     "till": "5:47 PM",
-     "beyond": false
-    },
-    {
-     "name": "Ardra",
-     "till": "3:08 PM, 27 Nov",
-     "beyond": true
-    }
-   ],
-   "yoga": [
-    {
-     "name": "Siddha",
-     "till": "7:49 AM",
-     "beyond": false
-    },
-    {
-     "name": "Sadhya",
-     "till": "3:44 AM, 27 Nov",
-     "beyond": false
-    },
-    {
-     "name": "Shubha",
-     "till": "11:51 PM, 27 Nov",
-     "beyond": true
-    }
-   ],
-   "karana": [
-    {
-     "name": "Garaja",
-     "till": "1:15 PM",
-     "beyond": false
-    },
-    {
-     "name": "Vanija",
-     "till": "11:30 PM",
-     "beyond": false
-    },
-    {
-     "name": "Vishti (Bhadra)",
-     "till": "9:49 AM, 27 Nov",
-     "beyond": true
-    }
-   ],
-   "moon_rashi": "Vrishabha",
-   "sun_rashi": "Vrishchika",
-   "masa_amanta": "Kartika",
-   "masa_purnimanta": "Margashirsha",
-   "ritu": "Hemanta",
-   "ayana": "Dakshinayana",
-   "vikram_samvat": 2083,
-   "shaka_samvat": 1948,
-   "rahu_kaal": "12:56 PM – 2:19 PM",
-   "yamaganda": "6:02 AM – 7:25 AM",
-   "gulika": "8:48 AM – 10:10 AM",
-   "abhijit": "11:11 AM – 11:55 AM",
-   "brahma_muhurta": "4:19 AM – 5:11 AM",
-   "ayanamsa": "24°13′58″",
-   "positions_at": "Bhubaneswar sunrise, 6:02 AM IST",
-   "cities": [
-    {
-     "city": "Bhubaneswar",
-     "sunrise": "6:02 AM",
-     "sunset": "5:05 PM"
-    },
-    {
-     "city": "Kolkata",
-     "sunrise": "5:56 AM",
-     "sunset": "4:51 PM"
-    },
-    {
-     "city": "Delhi",
-     "sunrise": "6:52 AM",
-     "sunset": "5:24 PM"
-    },
-    {
-     "city": "Mumbai",
-     "sunrise": "6:52 AM",
-     "sunset": "5:59 PM"
-    },
-    {
-     "city": "Chennai",
-     "sunrise": "6:12 AM",
-     "sunset": "5:39 PM"
-    }
-   ],
-   "planets": [
-    {
-     "key": "sun",
-     "planet": "Sun (Surya)",
-     "longitude": 219.5182,
-     "longitude_dms": "219°31′06″",
-     "rashi": "Vrishchika",
-     "rashi_en": "Scorpio",
-     "rashi_no": 8,
-     "degree": "9°31′06″",
-     "nakshatra": "Anuradha",
-     "pada": 2,
-     "nak_lord": "Saturn",
-     "speed": 1.0111,
-     "retro": false,
-     "combust": false,
-     "dignity": ""
-    },
-    {
-     "key": "moon",
-     "planet": "Moon (Chandra)",
-     "longitude": 59.2785,
-     "longitude_dms": "59°16′43″",
-     "rashi": "Vrishabha",
-     "rashi_en": "Taurus",
-     "rashi_no": 2,
-     "degree": "29°16′43″",
-     "nakshatra": "Mrigashira",
-     "pada": 2,
-     "nak_lord": "Mars",
-     "speed": 15.1164,
-     "retro": false,
-     "combust": false,
-     "dignity": "Exalted"
-    },
-    {
-     "key": "mars",
-     "planet": "Mars (Mangala)",
-     "longitude": 125.7801,
-     "longitude_dms": "125°46′48″",
-     "rashi": "Simha",
-     "rashi_en": "Leo",
-     "rashi_no": 5,
-     "degree": "5°46′48″",
-     "nakshatra": "Magha",
-     "pada": 2,
-     "nak_lord": "Ketu",
-     "speed": 0.3989,
-     "retro": false,
-     "combust": false,
-     "dignity": ""
-    },
-    {
-     "key": "mercury",
-     "planet": "Mercury (Budha)",
-     "longitude": 200.8853,
-     "longitude_dms": "200°53′07″",
-     "rashi": "Tula",
-     "rashi_en": "Libra",
-     "rashi_no": 7,
-     "degree": "20°53′07″",
-     "nakshatra": "Vishakha",
-     "pada": 1,
-     "nak_lord": "Jupiter",
-     "speed": 1.3134,
-     "retro": false,
-     "combust": false,
-     "dignity": ""
-    },
-    {
-     "key": "jupiter",
-     "planet": "Jupiter (Guru)",
-     "longitude": 122.3218,
-     "longitude_dms": "122°19′18″",
-     "rashi": "Simha",
-     "rashi_en": "Leo",
-     "rashi_no": 5,
-     "degree": "2°19′18″",
-     "nakshatra": "Magha",
-     "pada": 1,
-     "nak_lord": "Ketu",
-     "speed": 0.0541,
-     "retro": false,
-     "combust": false,
-     "dignity": ""
-    },
-    {
-     "key": "venus",
-     "planet": "Venus (Shukra)",
-     "longitude": 181.3054,
-     "longitude_dms": "181°18′19″",
-     "rashi": "Tula",
-     "rashi_en": "Libra",
-     "rashi_no": 7,
-     "degree": "1°18′19″",
-     "nakshatra": "Chitra",
-     "pada": 3,
-     "nak_lord": "Mars",
-     "speed": 0.4243,
-     "retro": false,
-     "combust": false,
-     "dignity": "Moolatrikona"
-    },
-    {
-     "key": "saturn",
-     "planet": "Saturn (Shani)",
-     "longitude": 343.898,
-     "longitude_dms": "343°53′53″",
-     "rashi": "Meena",
-     "rashi_en": "Pisces",
-     "rashi_no": 12,
-     "degree": "13°53′53″",
-     "nakshatra": "Uttara Bhadrapada",
-     "pada": 4,
-     "nak_lord": "Saturn",
-     "speed": -0.0267,
-     "retro": true,
-     "combust": false,
-     "dignity": ""
-    },
-    {
-     "key": "rahu",
-     "planet": "Rahu",
-     "longitude": 300.5133,
-     "longitude_dms": "300°30′48″",
-     "rashi": "Kumbha",
-     "rashi_en": "Aquarius",
-     "rashi_no": 11,
-     "degree": "0°30′48″",
-     "nakshatra": "Dhanishta",
-     "pada": 3,
-     "nak_lord": "Mars",
-     "speed": -0.053,
-     "retro": true,
-     "combust": false,
-     "dignity": ""
-    },
-    {
-     "key": "ketu",
-     "planet": "Ketu",
-     "longitude": 120.5133,
-     "longitude_dms": "120°30′48″",
-     "rashi": "Simha",
-     "rashi_en": "Leo",
-     "rashi_no": 5,
-     "degree": "0°30′48″",
-     "nakshatra": "Magha",
-     "pada": 1,
-     "nak_lord": "Ketu",
-     "speed": -0.053,
-     "retro": true,
-     "combust": false,
-     "dignity": ""
-    }
-   ]
-  },
   {
    "planet_note": "The Moon is in Mithuna, Ardra nakshatra. Retrograde: Saturn in Meena.",
    "special_yogas": [
@@ -3267,6 +2795,466 @@ window.PK_PANCHANG = {
      "rashi_en": "Leo",
      "rashi_no": 5,
      "degree": "0°11′43″",
+     "nakshatra": "Magha",
+     "pada": 1,
+     "nak_lord": "Ketu",
+     "speed": -0.053,
+     "retro": true,
+     "combust": false,
+     "dignity": ""
+    }
+   ]
+  },
+  {
+   "planet_note": "The Moon is in Kanya, Uttara Phalguni nakshatra. Retrograde: Saturn in Meena.",
+   "special_yogas": [],
+   "hora": {
+    "day": [
+     {
+      "n": 1,
+      "key": "jupiter",
+      "lord": "Jupiter (Guru)",
+      "time": "6:06 AM – 7:01 AM",
+      "t0": 1796258216,
+      "t1": 1796261510
+     },
+     {
+      "n": 2,
+      "key": "mars",
+      "lord": "Mars (Mangala)",
+      "time": "7:01 AM – 7:56 AM",
+      "t0": 1796261510,
+      "t1": 1796264804
+     },
+     {
+      "n": 3,
+      "key": "sun",
+      "lord": "Sun (Surya)",
+      "time": "7:56 AM – 8:51 AM",
+      "t0": 1796264804,
+      "t1": 1796268098
+     },
+     {
+      "n": 4,
+      "key": "venus",
+      "lord": "Venus (Shukra)",
+      "time": "8:51 AM – 9:46 AM",
+      "t0": 1796268098,
+      "t1": 1796271392
+     },
+     {
+      "n": 5,
+      "key": "mercury",
+      "lord": "Mercury (Budha)",
+      "time": "9:46 AM – 10:41 AM",
+      "t0": 1796271392,
+      "t1": 1796274686
+     },
+     {
+      "n": 6,
+      "key": "moon",
+      "lord": "Moon (Chandra)",
+      "time": "10:41 AM – 11:36 AM",
+      "t0": 1796274686,
+      "t1": 1796277980
+     },
+     {
+      "n": 7,
+      "key": "saturn",
+      "lord": "Saturn (Shani)",
+      "time": "11:36 AM – 12:31 PM",
+      "t0": 1796277980,
+      "t1": 1796281274
+     },
+     {
+      "n": 8,
+      "key": "jupiter",
+      "lord": "Jupiter (Guru)",
+      "time": "12:31 PM – 1:26 PM",
+      "t0": 1796281274,
+      "t1": 1796284567
+     },
+     {
+      "n": 9,
+      "key": "mars",
+      "lord": "Mars (Mangala)",
+      "time": "1:26 PM – 2:21 PM",
+      "t0": 1796284567,
+      "t1": 1796287861
+     },
+     {
+      "n": 10,
+      "key": "sun",
+      "lord": "Sun (Surya)",
+      "time": "2:21 PM – 3:15 PM",
+      "t0": 1796287861,
+      "t1": 1796291155
+     },
+     {
+      "n": 11,
+      "key": "venus",
+      "lord": "Venus (Shukra)",
+      "time": "3:15 PM – 4:10 PM",
+      "t0": 1796291155,
+      "t1": 1796294449
+     },
+     {
+      "n": 12,
+      "key": "mercury",
+      "lord": "Mercury (Budha)",
+      "time": "4:10 PM – 5:05 PM",
+      "t0": 1796294449,
+      "t1": 1796297743
+     }
+    ],
+    "night": [
+     {
+      "n": 13,
+      "key": "moon",
+      "lord": "Moon (Chandra)",
+      "time": "5:05 PM – 6:10 PM",
+      "t0": 1796297743,
+      "t1": 1796301652
+     },
+     {
+      "n": 14,
+      "key": "saturn",
+      "lord": "Saturn (Shani)",
+      "time": "6:10 PM – 7:16 PM",
+      "t0": 1796301652,
+      "t1": 1796305562
+     },
+     {
+      "n": 15,
+      "key": "jupiter",
+      "lord": "Jupiter (Guru)",
+      "time": "7:16 PM – 8:21 PM",
+      "t0": 1796305562,
+      "t1": 1796309471
+     },
+     {
+      "n": 16,
+      "key": "mars",
+      "lord": "Mars (Mangala)",
+      "time": "8:21 PM – 9:26 PM",
+      "t0": 1796309471,
+      "t1": 1796313380
+     },
+     {
+      "n": 17,
+      "key": "sun",
+      "lord": "Sun (Surya)",
+      "time": "9:26 PM – 10:31 PM",
+      "t0": 1796313380,
+      "t1": 1796317289
+     },
+     {
+      "n": 18,
+      "key": "venus",
+      "lord": "Venus (Shukra)",
+      "time": "10:31 PM – 11:36 PM",
+      "t0": 1796317289,
+      "t1": 1796321199
+     },
+     {
+      "n": 19,
+      "key": "mercury",
+      "lord": "Mercury (Budha)",
+      "time": "11:36 PM – 12:41 AM",
+      "t0": 1796321199,
+      "t1": 1796325108
+     },
+     {
+      "n": 20,
+      "key": "moon",
+      "lord": "Moon (Chandra)",
+      "time": "12:41 AM – 1:46 AM",
+      "t0": 1796325108,
+      "t1": 1796329017
+     },
+     {
+      "n": 21,
+      "key": "saturn",
+      "lord": "Saturn (Shani)",
+      "time": "1:46 AM – 2:52 AM",
+      "t0": 1796329017,
+      "t1": 1796332927
+     },
+     {
+      "n": 22,
+      "key": "jupiter",
+      "lord": "Jupiter (Guru)",
+      "time": "2:52 AM – 3:57 AM",
+      "t0": 1796332927,
+      "t1": 1796336836
+     },
+     {
+      "n": 23,
+      "key": "mars",
+      "lord": "Mars (Mangala)",
+      "time": "3:57 AM – 5:02 AM",
+      "t0": 1796336836,
+      "t1": 1796340745
+     },
+     {
+      "n": 24,
+      "key": "sun",
+      "lord": "Sun (Surya)",
+      "time": "5:02 AM – 6:07 AM",
+      "t0": 1796340745,
+      "t1": 1796344654
+     }
+    ]
+   },
+   "date": "2026-12-03",
+   "date_label": "Thursday, 3 December 2026",
+   "vara": "Guruvara (Thursday)",
+   "sunrise": "6:06 AM",
+   "sunset": "5:05 PM",
+   "moonrise": "12:58 AM",
+   "moonset": "1:06 PM",
+   "paksha": "Krishna Paksha",
+   "tithi": [
+    {
+     "name": "Krishna Dashami",
+     "till": "11:04 PM",
+     "beyond": false
+    },
+    {
+     "name": "Krishna Ekadashi",
+     "till": "11:45 PM, 04 Dec",
+     "beyond": true
+    }
+   ],
+   "nakshatra": [
+    {
+     "name": "Uttara Phalguni",
+     "till": "9:23 AM",
+     "beyond": false
+    },
+    {
+     "name": "Hasta",
+     "till": "10:23 AM, 04 Dec",
+     "beyond": true
+    }
+   ],
+   "yoga": [
+    {
+     "name": "Priti",
+     "till": "9:15 AM",
+     "beyond": false
+    },
+    {
+     "name": "Ayushman",
+     "till": "8:23 AM, 04 Dec",
+     "beyond": true
+    }
+   ],
+   "karana": [
+    {
+     "name": "Vanija",
+     "till": "10:54 AM",
+     "beyond": false
+    },
+    {
+     "name": "Vishti (Bhadra)",
+     "till": "11:04 PM",
+     "beyond": false
+    },
+    {
+     "name": "Bava",
+     "till": "11:21 AM, 04 Dec",
+     "beyond": true
+    }
+   ],
+   "moon_rashi": "Kanya",
+   "sun_rashi": "Vrishchika",
+   "masa_amanta": "Kartika",
+   "masa_purnimanta": "Margashirsha",
+   "ritu": "Hemanta",
+   "ayana": "Dakshinayana",
+   "vikram_samvat": 2083,
+   "shaka_samvat": 1948,
+   "rahu_kaal": "12:58 PM – 2:21 PM",
+   "yamaganda": "6:06 AM – 7:29 AM",
+   "gulika": "8:51 AM – 10:13 AM",
+   "abhijit": "11:14 AM – 11:58 AM",
+   "brahma_muhurta": "4:23 AM – 5:15 AM",
+   "ayanamsa": "24°13′59″",
+   "positions_at": "Bhubaneswar sunrise, 6:06 AM IST",
+   "cities": [
+    {
+     "city": "Bhubaneswar",
+     "sunrise": "6:06 AM",
+     "sunset": "5:05 PM"
+    },
+    {
+     "city": "Kolkata",
+     "sunrise": "6:01 AM",
+     "sunset": "4:51 PM"
+    },
+    {
+     "city": "Delhi",
+     "sunrise": "6:57 AM",
+     "sunset": "5:23 PM"
+    },
+    {
+     "city": "Mumbai",
+     "sunrise": "6:56 AM",
+     "sunset": "5:59 PM"
+    },
+    {
+     "city": "Chennai",
+     "sunrise": "6:16 AM",
+     "sunset": "5:40 PM"
+    }
+   ],
+   "planets": [
+    {
+     "key": "sun",
+     "planet": "Sun (Surya)",
+     "longitude": 226.6094,
+     "longitude_dms": "226°36′34″",
+     "rashi": "Vrishchika",
+     "rashi_en": "Scorpio",
+     "rashi_no": 8,
+     "degree": "16°36′34″",
+     "nakshatra": "Anuradha",
+     "pada": 4,
+     "nak_lord": "Saturn",
+     "speed": 1.014,
+     "retro": false,
+     "combust": false,
+     "dignity": ""
+    },
+    {
+     "key": "moon",
+     "planet": "Moon (Chandra)",
+     "longitude": 158.2285,
+     "longitude_dms": "158°13′43″",
+     "rashi": "Kanya",
+     "rashi_en": "Virgo",
+     "rashi_no": 6,
+     "degree": "8°13′43″",
+     "nakshatra": "Uttara Phalguni",
+     "pada": 4,
+     "nak_lord": "Sun",
+     "speed": 12.9699,
+     "retro": false,
+     "combust": false,
+     "dignity": ""
+    },
+    {
+     "key": "mars",
+     "planet": "Mars (Mangala)",
+     "longitude": 128.4381,
+     "longitude_dms": "128°26′17″",
+     "rashi": "Simha",
+     "rashi_en": "Leo",
+     "rashi_no": 5,
+     "degree": "8°26′17″",
+     "nakshatra": "Magha",
+     "pada": 3,
+     "nak_lord": "Ketu",
+     "speed": 0.359,
+     "retro": false,
+     "combust": false,
+     "dignity": ""
+    },
+    {
+     "key": "mercury",
+     "planet": "Mercury (Budha)",
+     "longitude": 210.7787,
+     "longitude_dms": "210°46′43″",
+     "rashi": "Vrishchika",
+     "rashi_en": "Scorpio",
+     "rashi_no": 8,
+     "degree": "0°46′43″",
+     "nakshatra": "Vishakha",
+     "pada": 4,
+     "nak_lord": "Jupiter",
+     "speed": 1.4798,
+     "retro": false,
+     "combust": false,
+     "dignity": ""
+    },
+    {
+     "key": "jupiter",
+     "planet": "Jupiter (Guru)",
+     "longitude": 122.6255,
+     "longitude_dms": "122°37′32″",
+     "rashi": "Simha",
+     "rashi_en": "Leo",
+     "rashi_no": 5,
+     "degree": "2°37′32″",
+     "nakshatra": "Magha",
+     "pada": 1,
+     "nak_lord": "Ketu",
+     "speed": 0.0324,
+     "retro": false,
+     "combust": false,
+     "dignity": ""
+    },
+    {
+     "key": "venus",
+     "planet": "Venus (Shukra)",
+     "longitude": 184.9456,
+     "longitude_dms": "184°56′44″",
+     "rashi": "Tula",
+     "rashi_en": "Libra",
+     "rashi_no": 7,
+     "degree": "4°56′44″",
+     "nakshatra": "Chitra",
+     "pada": 4,
+     "nak_lord": "Mars",
+     "speed": 0.6072,
+     "retro": false,
+     "combust": false,
+     "dignity": "Moolatrikona"
+    },
+    {
+     "key": "saturn",
+     "planet": "Saturn (Shani)",
+     "longitude": 343.7532,
+     "longitude_dms": "343°45′12″",
+     "rashi": "Meena",
+     "rashi_en": "Pisces",
+     "rashi_no": 12,
+     "degree": "13°45′12″",
+     "nakshatra": "Uttara Bhadrapada",
+     "pada": 4,
+     "nak_lord": "Saturn",
+     "speed": -0.0145,
+     "retro": true,
+     "combust": false,
+     "dignity": ""
+    },
+    {
+     "key": "rahu",
+     "planet": "Rahu",
+     "longitude": 300.1422,
+     "longitude_dms": "300°08′32″",
+     "rashi": "Kumbha",
+     "rashi_en": "Aquarius",
+     "rashi_no": 11,
+     "degree": "0°08′32″",
+     "nakshatra": "Dhanishta",
+     "pada": 3,
+     "nak_lord": "Mars",
+     "speed": -0.053,
+     "retro": true,
+     "combust": false,
+     "dignity": ""
+    },
+    {
+     "key": "ketu",
+     "planet": "Ketu",
+     "longitude": 120.1422,
+     "longitude_dms": "120°08′32″",
+     "rashi": "Simha",
+     "rashi_en": "Leo",
+     "rashi_no": 5,
+     "degree": "0°08′32″",
      "nakshatra": "Magha",
      "pada": 1,
      "nak_lord": "Ketu",
