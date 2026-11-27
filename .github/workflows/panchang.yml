@@ -47,7 +47,7 @@ jobs:
         run: |
           git config user.name "Panchang bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add panchang-data.js muhurta-data.js panchang blog consultation courses about muhurta img/pandit-krishna.jpg sitemap.xml
+          git add panchang-data.js muhurta-data.js panchang blog blog-recent.js consultation courses about muhurta img/pandit-krishna.jpg sitemap.xml
           if git diff --cached --quiet; then echo "No change"; exit 0; fi
           git commit -m "Daily Panchang update $(TZ=Asia/Kolkata date +%F)"
           git pull --rebase origin main

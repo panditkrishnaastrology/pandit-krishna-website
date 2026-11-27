@@ -414,6 +414,19 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
 :root[lang=kn] .syl li::before{content:counter(m,kannada)}
 .syl li p{grid-column:2;margin:2px 0 0;color:var(--muted);font-size:.9em;line-height:1.45}
 .recent .post b a{color:inherit;text-decoration:none}.recent .post b a:hover{text-decoration:underline}.recent>p:has(.textlink){margin:0 0 6px}
+.recent .post p.preview{display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
+.recent .post .more{display:inline-block;margin-top:6px;font-size:14px}
+.recent .post{padding:14px 0;border-bottom:1px solid var(--line)}
+.today dd#postTeach{font-size:16px;line-height:1.7}
+@media (max-width:640px){.today{padding:22px 18px}.today h3{font-size:26px}.today dl div{grid-template-columns:1fr;gap:4px}.blog{gap:28px}}
+.nav a{white-space:nowrap}
+@media (min-width:901px){.nav{gap:6px 18px}}
+@media (min-width:901px) and (max-width:1240px){.nav{gap:6px 16px}.nav a{font-size:14px}.nav a.btn{padding:0 14px}}
+.site-header.nav-compact .menu-btn{display:inline-flex;align-items:center}
+.site-header.nav-compact .nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--violet);flex-direction:column;align-items:stretch;gap:0;padding:8px max(16px,env(safe-area-inset-right,0px)) 20px max(16px,env(safe-area-inset-left,0px));border-top:1px solid var(--violet-soft)}
+.site-header.nav-compact .nav.open{display:flex}
+.site-header.nav-compact .nav a{padding:14px 0;border-bottom:1px solid var(--violet-soft);font-size:15px}
+.site-header.nav-compact .nav a.btn{margin-top:12px;border:0;padding:0 20px}
 </style>
 </head>
 <body>
@@ -436,6 +449,30 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
  </div>
 </header>
 <div class="pause-note" id="pauseNote" role="note"><div class="wrap"><strong>Notice:</strong> <span>From 1 December 2026 to 11 January 2027 (42 days), Pandit Krishna will not give any astrological predictions or consultations. Consultations resume on 12 January 2027.</span> <span>The daily Panchang, Muhurta finder and Daily Blog remain available.</span></div></div>
+<script>(function(){
+ /* Desktop menu: if the items do not fit on one line (long words in some
+    languages, narrow windows), use the Menu button as on phones. */
+ var h=document.querySelector(".site-header"), n=document.getElementById("nav"); if(!h||!n) return;
+ var busy=false;
+ function fit(){
+  if(busy) return; busy=true;
+  h.classList.remove("nav-compact");
+  if(window.innerWidth>900){
+   var as=n.querySelectorAll("a"), bad=false;
+   function mid(el){var r=el.getBoundingClientRect();return (r.top+r.bottom)/2;}
+   var c=as.length?mid(as[0]):0;
+   for(var i=0;i<as.length;i++){ if(Math.abs(mid(as[i])-c)>6){bad=true;break;} }
+   if(!bad){ var bar=h.querySelector(".bar").getBoundingClientRect(), last=as[as.length-1].getBoundingClientRect(); if(last.right>bar.right+1||document.documentElement.scrollWidth>window.innerWidth+1) bad=true; }
+   if(bad) h.classList.add("nav-compact");
+  }
+  busy=false;
+ }
+ var tm; function later(){clearTimeout(tm); tm=setTimeout(fit,60);}
+ window.addEventListener("resize",later);
+ if(window.MutationObserver) new MutationObserver(later).observe(n,{subtree:true,characterData:true,childList:true});
+ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+ fit();
+})();</script>
 <script>(function(){
  var n=document.getElementById("pauseNote"); if(!n) return;
  var now=Date.now(), from=Date.parse("2026-12-01T00:00:00+05:30"), till=Date.parse("2027-01-12T00:00:00+05:30");
@@ -949,7 +986,7 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
 <a class="wa-float" href="https://wa.me/919668024876" target="_blank" rel="noopener" aria-label="Message on WhatsApp"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-4.7a8.5 8.5 0 1 1 15.8-4.3z"/><path d="M9 9.5c.3 2.2 2.3 4.3 4.6 4.8l1.2-1.2 1.7.8"/></svg><span>WhatsApp</span></a>
 
 <script src="panchang-data.js"></script>
-<script src="blog-data.js"></script>
+<script src="blog-recent.js"></script>
 <script src="i18n.js"></script>
 <script>
 (function(){
@@ -1137,13 +1174,15 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
         var v=x.data(), el=document.createElement("div"); el.className="post";
         var sp=document.createElement("span"); sp.textContent=nice(x.id); sp.setAttribute("data-terms","");
         var b=document.createElement("b"); if(linkPosts){var la=document.createElement("a"); la.href="/blog/"+x.id+"/"; la.textContent=v.title||"Teaching point"; b.appendChild(la);} else b.textContent=v.title||"Teaching point";
-        var pp=document.createElement("p"); pp.textContent=v.teaching;
-        el.appendChild(sp); el.appendChild(b); el.appendChild(pp); box.appendChild(el);
+        var pp=document.createElement("p"); pp.className="preview"; pp.textContent=String(v.teaching).trim().split(/\n\s*\n/)[0].trim();
+        el.appendChild(sp); el.appendChild(b); el.appendChild(pp);
+        if(linkPosts){var more=document.createElement("a"); more.className="textlink more"; more.href="/blog/"+x.id+"/"; more.textContent="Read the full post"; el.appendChild(more);}
+        box.appendChild(el);
       });
     }
     var linkPosts=false;
     if(!window.claude||!window.claude.use){
-      // live website: teaching points come from blog-data.js
+      // live website: teaching points come from blog-recent.js (latest posts only; full archive in blog-data.js and /blog/)
       var P=((window.PK_BLOG&&window.PK_BLOG.posts)||[]).filter(function(p){return p.date<=key;}).sort(function(a,b){return a.date<b.date?1:-1;}), curP=null;
       P.forEach(function(p){if(p.date===key)curP=p;});
       showPost(curP);
@@ -1184,10 +1223,11 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
     sel.innerHTML="";
     I.langs.forEach(function(l){var o=document.createElement("option");o.value=l[0];o.textContent=l[1];o.lang=l[0];sel.appendChild(o);});
     var orig=new WeakMap(), lang="en", dict=null, busy=false;
-    // blog posts carry their own translations (blog-data.js, field tr)
+    // blog posts carry their own translations (blog-recent.js, field tr); previews use the first paragraph
     var BT={}; function nz(x){return String(x).replace(/\s+/g," ").trim();}
+    function firstPara(x){return String(x||"").trim().split(/\n\s*\n/)[0].trim();}
     ((window.PK_BLOG&&window.PK_BLOG.posts)||[]).forEach(function(p){
-      for(var c in (p.tr||{})){var t=p.tr[c]; BT[c]=BT[c]||{}; if(t.title) BT[c][nz(p.title)]=t.title; if(t.teaching) BT[c][nz(p.teaching)]=t.teaching;}
+      for(var c in (p.tr||{})){var t=p.tr[c]; BT[c]=BT[c]||{}; if(t.title) BT[c][nz(p.title)]=t.title; if(t.teaching){BT[c][nz(p.teaching)]=t.teaching; var a1=firstPara(p.teaching), b1=firstPara(t.teaching); if(a1&&b1&&a1!==p.teaching) BT[c][nz(a1)]=b1;}}
     });
     function one(n){
       var pe=n.parentElement; if(!pe||pe.closest("script,style,#langSel,textarea,[data-noi18n]")) return;

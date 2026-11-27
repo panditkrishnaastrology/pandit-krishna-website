@@ -1,8 +1,10 @@
 name: Blog pages
 
-# Builds blog/YYYY-MM-DD/ pages whenever a post is added to blog-data.js.
-# Posts dated in the future are built by the nightly Panchang run on their date.
+# Builds blog/YYYY-MM-DD/ pages and blog-recent.js whenever a post is added
+# to blog-data.js, and at 05:05 IST, when the day's post goes live.
 on:
+  schedule:
+    - cron: "35 23 * * *"   # 05:05 IST
   push:
     branches: [main]
     paths: ["blog-data.js", "tools/blog_pages.py"]
@@ -30,7 +32,7 @@ jobs:
         run: |
           git config user.name "Panchang bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add blog sitemap.xml
+          git add blog blog-recent.js sitemap.xml
           if git diff --cached --quiet; then echo "No change"; exit 0; fi
           git commit -m "Blog pages $(TZ=Asia/Kolkata date +%F)"
           git pull --rebase origin main
