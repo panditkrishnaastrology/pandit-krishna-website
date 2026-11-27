@@ -121,15 +121,29 @@ def main():
     first = next((d for d in days if d["date"] == today), days[0])
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(page(first, days, data["generated"], data["method"], "panchang/", True))
-    # sitemap: home, today's Panchang, every dated page kept in the folder
-    dated = sorted(f[:-5] for f in os.listdir(out) if re.fullmatch(r"\d{4}-\d{2}-\d{2}\.html", f))
+    n = write_sitemap(ROOT)
+    print(f"wrote {len(days)} day pages + index; sitemap has {n} URLs")
+
+
+def write_sitemap(root):
+    """sitemap.xml: home, Panchang (today + every dated page), blog list and
+    every published blog post page. Shared with blog_pages.py."""
+    today = datetime.now(IST).date().isoformat()
     urls = [(f"{SITE}/", today, "weekly", "1.0"), (f"{SITE}/panchang/", today, "daily", "0.9")]
+    pdir = os.path.join(root, "panchang")
+    dated = sorted(f[:-5] for f in os.listdir(pdir) if re.fullmatch(r"\d{4}-\d{2}-\d{2}\.html", f)) if os.path.isdir(pdir) else []
+    bdir = os.path.join(root, "blog")
+    posts = sorted((x for x in os.listdir(bdir) if re.fullmatch(r"\d{4}-\d{2}-\d{2}", x)
+                    and os.path.isfile(os.path.join(bdir, x, "index.html"))), reverse=True) if os.path.isdir(bdir) else []
+    if posts:
+        urls.append((f"{SITE}/blog/", posts[0], "daily", "0.8"))
+        urls += [(f"{SITE}/blog/{x}/", x, "monthly", "0.6") for x in posts]
     urls += [(f"{SITE}/panchang/{x}.html", x if x <= today else today, "monthly", "0.5") for x in dated]
     xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     xml += [f"  <url><loc>{u}</loc><lastmod>{m}</lastmod><changefreq>{c}</changefreq><priority>{p}</priority></url>" for u, m, c, p in urls]
     xml.append("</urlset>")
-    open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write("\n".join(xml) + "\n")
-    print(f"wrote {len(days)} day pages + index; sitemap has {len(urls)} URLs")
+    open(os.path.join(root, "sitemap.xml"), "w", encoding="utf-8").write("\n".join(xml) + "\n")
+    return len(urls)
 
 
 if __name__ == "__main__":
