@@ -126,10 +126,16 @@ def main():
 
 
 def write_sitemap(root):
-    """sitemap.xml: home, Panchang (today + every dated page), blog list and
-    every published blog post page. Shared with blog_pages.py."""
+    """sitemap.xml: home, Panchang (today + every dated page), the section pages
+    (consultation, courses, about, muhurta), blog list and every published blog
+    post page. Shared with blog_pages.py and site_pages.py."""
     today = datetime.now(IST).date().isoformat()
     urls = [(f"{SITE}/", today, "weekly", "1.0"), (f"{SITE}/panchang/", today, "daily", "0.9")]
+    for page, freq, prio in (("consultation", "monthly", "0.9"), ("courses", "monthly", "0.9"),
+                             ("about", "monthly", "0.8"), ("muhurta", "weekly", "0.8")):
+        f = os.path.join(root, page, "index.html")
+        if os.path.isfile(f) and 'http-equiv="refresh"' not in open(f, encoding="utf-8").read(2000):
+            urls.append((f"{SITE}/{page}/", today, freq, prio))
     pdir = os.path.join(root, "panchang")
     dated = sorted(f[:-5] for f in os.listdir(pdir) if re.fullmatch(r"\d{4}-\d{2}-\d{2}\.html", f)) if os.path.isdir(pdir) else []
     bdir = os.path.join(root, "blog")

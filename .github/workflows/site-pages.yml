@@ -1,0 +1,37 @@
+name: Section pages
+
+# Rebuilds /consultation/, /courses/, /about/ and /muhurta/ from index.html
+# whenever the main page changes, so prices and text always match.
+on:
+  push:
+    branches: [main]
+    paths: ["index.html", "tools/site_pages.py"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: panchang
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build the section pages and sitemap
+        run: python tools/site_pages.py .
+      - name: Commit and push
+        run: |
+          git config user.name "Panchang bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add consultation courses about muhurta img/pandit-krishna.jpg sitemap.xml
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          git commit -m "Section pages $(TZ=Asia/Kolkata date +%F)"
+          git pull --rebase origin main
+          git push origin main
