@@ -43,11 +43,13 @@ jobs:
         run: python tools/blog_pages.py .
       - name: Build the section pages (keeps the break notice up to date)
         run: python tools/site_pages.py .
+      - name: Build the language pages
+        run: python tools/lang_pages.py .
       - name: Commit and push
         run: |
           git config user.name "Panchang bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add panchang-data.js muhurta-data.js panchang blog blog-recent.js consultation courses about muhurta img/pandit-krishna.jpg sitemap.xml
+          git add panchang-data.js muhurta-data.js panchang blog blog-recent.js consultation courses about muhurta img/pandit-krishna.jpg hi or bn te ta gu mr kn ml sitemap.xml
           if git diff --cached --quiet; then echo "No change"; exit 0; fi
           git commit -m "Daily Panchang update $(TZ=Asia/Kolkata date +%F)"
           git pull --rebase origin main

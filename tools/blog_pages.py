@@ -66,6 +66,14 @@ def paragraphs(text):
     return "".join(f"<p>{e(p.strip())}</p>" for p in re.split(r"\n\s*\n", text.strip()) if p.strip())
 
 
+LANG_CODES = ["hi", "or", "bn", "te", "ta", "gu", "mr", "kn", "ml"]
+
+
+def hreflang(paths):
+    links = [f'<link rel="alternate" hreflang="{c}" href="{SITE}{p}">' for c, p in paths.items()]
+    return "".join(links) + f'<link rel="alternate" hreflang="x-default" href="{SITE}{paths["en"]}">'
+
+
 def head(title, desc, canonical, og_type, extra=""):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="{CSP}"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -95,6 +103,10 @@ def post_page(p, newer, older):
                       "logo": {"@type": "ImageObject", "url": f"{SITE}/img/icon-512.png"}},
     }
     ld_tag = '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
+    langs = {"en": f"/blog/{date}/"}
+    langs.update({c: f"/{c}/blog/{date}/" for c in LANG_CODES if (p.get("tr") or {}).get(c, {}).get("teaching")})
+    if len(langs) > 1:
+        ld_tag = hreflang(langs) + "\n" + ld_tag
     panchang = os.path.isfile(os.path.join(ROOT, "panchang", f"{date}.html"))
     pan_link = (f'<a href="/panchang/{date}.html">See the full Panchang for this day</a>. ' if panchang
                 else '<a href="/panchang/">See today’s Panchang</a>. ')
@@ -121,7 +133,9 @@ def index_page(posts):
         f'<p>{e(short(p["teaching"], 180))}</p></li>' for p in posts)
     desc = ("Daily astrology teaching points by Pandit Krishna, Bhubaneswar: Bhrigu Nandi Nadi lessons on the day’s sky, "
             "festivals and vrats, nakshatras, Prasna, numerology and simple remedies.")
-    return head("Daily Astrology Blog | Pandit Krishna Astrology", desc, f"{SITE}/blog/", "website") + f"""<section class="hero"><div class="wrap"><p class="k">Daily blog</p><h1>Daily teaching points</h1>
+    langs = {"en": "/blog/"}
+    langs.update({c: f"/{c}/blog/" for c in LANG_CODES})
+    return head("Daily Astrology Blog | Pandit Krishna Astrology", desc, f"{SITE}/blog/", "website", hreflang(langs) + "\n") + f"""<section class="hero"><div class="wrap"><p class="k">Daily blog</p><h1>Daily teaching points</h1>
 <p>One short lesson every day from Pandit Krishna, based on the day’s Panchang and planets.</p></div></section>
 <main><div class="wrap">
 <ul class="list">{items}</ul>

@@ -8,6 +8,7 @@
 <title>Pandit Krishna Astrology | Vedic, Nadi & Prasna Jyotish, Bhubaneswar</title>
 <meta name="description" content="Pandit Krishna Astrology, Bhubaneswar: Vedic astrology, Bhrigu Nandi Nadi, Prasna Jyotish and Vedic numerology consultations and courses, with a free daily Panchang.">
 <link rel="canonical" href="https://panditkrishnaastrology.com/">
+<link rel="alternate" hreflang="en" href="https://panditkrishnaastrology.com/"><link rel="alternate" hreflang="hi" href="https://panditkrishnaastrology.com/hi/"><link rel="alternate" hreflang="or" href="https://panditkrishnaastrology.com/or/"><link rel="alternate" hreflang="bn" href="https://panditkrishnaastrology.com/bn/"><link rel="alternate" hreflang="te" href="https://panditkrishnaastrology.com/te/"><link rel="alternate" hreflang="ta" href="https://panditkrishnaastrology.com/ta/"><link rel="alternate" hreflang="gu" href="https://panditkrishnaastrology.com/gu/"><link rel="alternate" hreflang="mr" href="https://panditkrishnaastrology.com/mr/"><link rel="alternate" hreflang="kn" href="https://panditkrishnaastrology.com/kn/"><link rel="alternate" hreflang="ml" href="https://panditkrishnaastrology.com/ml/"><link rel="alternate" hreflang="x-default" href="https://panditkrishnaastrology.com/">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#4A1442">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -417,7 +418,6 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
 .recent .post p.preview{display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
 .recent .post .more{display:inline-block;margin-top:6px;font-size:14px}
 .recent .post{padding:14px 0;border-bottom:1px solid var(--line)}
-.today dd#postTeach{font-size:16px;line-height:1.7}
 @media (max-width:640px){.today{padding:22px 18px}.today h3{font-size:26px}.today dl div{grid-template-columns:1fr;gap:4px}.blog{gap:28px}}
 .nav a{white-space:nowrap}
 @media (min-width:901px){.nav{gap:6px 18px}}
@@ -427,6 +427,10 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
 .site-header.nav-compact .nav.open{display:flex}
 .site-header.nav-compact .nav a{padding:14px 0;border-bottom:1px solid var(--violet-soft);font-size:15px}
 .site-header.nav-compact .nav a.btn{margin-top:12px;border:0;padding:0 20px}
+#postTeach{white-space:pre-line;font-size:16px;line-height:1.7}
+#postTeach.teach-clamp{max-height:10.2em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+.teach-more{margin-top:10px;background:none;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:8px 14px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.teach-more:hover{background:rgba(212,175,55,.12)}
 </style>
 </head>
 <body>
@@ -449,6 +453,7 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
  </div>
 </header>
 <div class="pause-note" id="pauseNote" role="note"><div class="wrap"><strong>Notice:</strong> <span>From 1 December 2026 to 11 January 2027 (42 days), Pandit Krishna will not give any astrological predictions or consultations. Consultations resume on 12 January 2027.</span> <span>The daily Panchang, Muhurta finder and Daily Blog remain available.</span></div></div>
+<script>var HOME_TITLE=document.title;</script>
 <script>(function(){
  /* Desktop menu: if the items do not fit on one line (long words in some
     languages, narrow windows), use the Menu button as on phones. */
@@ -580,7 +585,7 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
     <dl>
      <div><dt>Panchang</dt><dd id="postPanchang" data-terms>Loading…</dd></div>
      <div><dt>Planetary note</dt><dd id="postNote" data-note>Loading…</dd></div>
-     <div hidden><dt>Teaching point</dt><dd id="postTeach"><span class="post-wait">Today’s teaching point will appear here.</span></dd></div>
+     <div hidden><dt>Teaching point</dt><dd><div id="postTeach" class="teach-clamp"><span class="post-wait">Today’s teaching point will appear here.</span></div><button type="button" class="teach-more" id="teachMore" aria-expanded="false" aria-controls="postTeach" hidden>Read the full post</button></dd></div>
     </dl>
     <form class="post-edit" id="postEdit" hidden novalidate>
      <p class="post-edit-head">Write today’s teaching point <span>Only you can see this box</span></p>
@@ -1004,7 +1009,7 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
       var el=document.getElementById(h);
       if(el) window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-headerH()+1,behavior:"auto"});
     } else window.scrollTo(0,0);
-    document.title=view==="home"?"Pandit Krishna Astrology | Vedic, Nadi & Prasna Jyotish, Bhubaneswar":({panchang:"Daily Panchang, Bhubaneswar",muhurta:"Know Your Auspicious Time",book:"Book a Consultation",contact:"Contact",privacy:"Privacy Policy",refund:"Refund Policy",disclaimer:"Disclaimer"})[view]+" | Pandit Krishna Astrology";
+    document.title=view==="home"?HOME_TITLE:({panchang:"Daily Panchang, Bhubaneswar",muhurta:"Know Your Auspicious Time",book:"Book a Consultation",contact:"Contact",privacy:"Privacy Policy",refund:"Refund Policy",disclaimer:"Disclaimer"})[view]+" | Pandit Krishna Astrology";
   }
   window.addEventListener("hashchange",show);
   // same-hash clicks (e.g. tapping Consultation twice) still scroll
@@ -1160,8 +1165,12 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
     function nice(k){var p=k.split("-");return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"});}
     function showPost(data){
       var t=document.getElementById("postTeach");
-      if(data&&data.teaching){t.textContent=data.teaching;t.parentNode.hidden=false;}
-      else{t.innerHTML='<span class="post-wait">Today’s teaching point will appear here.</span>';t.parentNode.hidden=true;}
+      var row=t.closest("div[hidden],dl>div"), mb=document.getElementById("teachMore");
+      if(data&&data.teaching){t.textContent=data.teaching;row.hidden=false;}
+      else{t.innerHTML='<span class="post-wait">Today’s teaching point will appear here.</span>';row.hidden=true;}
+      // long posts: show the first lines, with a button to open the rest in place
+      t.classList.add("teach-clamp"); mb.hidden=true; mb.setAttribute("aria-expanded","false");
+      requestAnimationFrame(function(){ if(t.scrollHeight>t.clientHeight+8) mb.hidden=false; else t.classList.remove("teach-clamp"); });
       document.getElementById("postTitle").textContent=(data&&data.title)||"Daily Panchang and teaching";
     }
     function showRecent(docs){
@@ -1173,14 +1182,17 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
       items.forEach(function(x){
         var v=x.data(), el=document.createElement("div"); el.className="post";
         var sp=document.createElement("span"); sp.textContent=nice(x.id); sp.setAttribute("data-terms","");
-        var b=document.createElement("b"); if(linkPosts){var la=document.createElement("a"); la.href="/blog/"+x.id+"/"; la.textContent=v.title||"Teaching point"; b.appendChild(la);} else b.textContent=v.title||"Teaching point";
+        var b=document.createElement("b"); if(linkPosts){var la=document.createElement("a"); la.href=BLOG+x.id+"/"; la.textContent=v.title||"Teaching point"; b.appendChild(la);} else b.textContent=v.title||"Teaching point";
         var pp=document.createElement("p"); pp.className="preview"; pp.textContent=String(v.teaching).trim().split(/\n\s*\n/)[0].trim();
         el.appendChild(sp); el.appendChild(b); el.appendChild(pp);
-        if(linkPosts){var more=document.createElement("a"); more.className="textlink more"; more.href="/blog/"+x.id+"/"; more.textContent="Read the full post"; el.appendChild(more);}
+        if(linkPosts){var more=document.createElement("a"); more.className="textlink more"; more.href=BLOG+x.id+"/"; more.textContent="Read the full post"; el.appendChild(more);}
         box.appendChild(el);
       });
     }
-    var linkPosts=false;
+    var linkPosts=false, PL=document.documentElement.getAttribute("data-pk-lang"), BLOG=(PL?"/"+PL:"")+"/blog/";
+    document.getElementById("teachMore").addEventListener("click",function(){
+      var t=document.getElementById("postTeach"); t.classList.remove("teach-clamp"); this.hidden=true; this.setAttribute("aria-expanded","true");
+    });
     if(!window.claude||!window.claude.use){
       // live website: teaching points come from blog-recent.js (latest posts only; full archive in blog-data.js and /blog/)
       var P=((window.PK_BLOG&&window.PK_BLOG.posts)||[]).filter(function(p){return p.date<=key;}).sort(function(a,b){return a.date<b.date?1:-1;}), curP=null;
@@ -1274,12 +1286,18 @@ body{overflow-wrap:break-word}main a,main .val,main p,main li,main dd{overflow-w
     }
     var loading={};
     I.onText=function(code){ if(code===lang) apply(); };
-    sel.addEventListener("change",function(){set(sel.value,true);});
+    // language pages (/hi/, /or/ …) open in their language; there the menu moves to the matching page
+    var pageLang=document.documentElement.getAttribute("data-pk-lang");
+    sel.addEventListener("change",function(){
+      if(pageLang){ try{localStorage.setItem("pk-lang",sel.value);}catch(e){} location.href=(sel.value==="en"?"/":"/"+sel.value+"/")+location.hash; return; }
+      set(sel.value,true);
+    });
     var timer=null;
     new MutationObserver(function(){ if(busy||lang==="en") return; clearTimeout(timer); timer=setTimeout(apply,30); })
       .observe(document.body,{childList:true,subtree:true,characterData:true});
     var saved=null; try{saved=localStorage.getItem("pk-lang");}catch(e){}
-    if(saved&&saved!=="en") set(saved,false);
+    if(pageLang) set(pageLang,false);
+    else if(saved&&saved!=="en") set(saved,false);
   })();
 
   // ---------- testimonials: show 3, expand on request ----------

@@ -138,6 +138,15 @@ def write_sitemap(root):
             urls.append((f"{SITE}/{page}/", today, freq, prio))
     pdir = os.path.join(root, "panchang")
     dated = sorted(f[:-5] for f in os.listdir(pdir) if re.fullmatch(r"\d{4}-\d{2}-\d{2}\.html", f)) if os.path.isdir(pdir) else []
+    for code in ("hi", "or", "bn", "te", "ta", "gu", "mr", "kn", "ml"):  # language versions (lang_pages.py)
+        if os.path.isfile(os.path.join(root, code, "index.html")):
+            urls.append((f"{SITE}/{code}/", today, "daily", "0.9"))
+        lb = os.path.join(root, code, "blog")
+        if os.path.isdir(lb):
+            ds = sorted((x for x in os.listdir(lb) if re.fullmatch(r"\d{4}-\d{2}-\d{2}", x)), reverse=True)
+            if ds:
+                urls.append((f"{SITE}/{code}/blog/", ds[0], "daily", "0.6"))
+                urls += [(f"{SITE}/{code}/blog/{x}/", x, "monthly", "0.5") for x in ds]
     bdir = os.path.join(root, "blog")
     posts = sorted((x for x in os.listdir(bdir) if re.fullmatch(r"\d{4}-\d{2}-\d{2}", x)
                     and os.path.isfile(os.path.join(bdir, x, "index.html"))), reverse=True) if os.path.isdir(bdir) else []

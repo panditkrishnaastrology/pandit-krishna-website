@@ -7,7 +7,7 @@ on:
     - cron: "35 23 * * *"   # 05:05 IST
   push:
     branches: [main]
-    paths: ["blog-data.js", "tools/blog_pages.py"]
+    paths: ["blog-data.js", "tools/blog_pages.py", "tools/lang_pages.py"]
   workflow_dispatch: {}
 
 permissions:
@@ -28,11 +28,13 @@ jobs:
           python-version: "3.12"
       - name: Build the blog post pages and sitemap
         run: python tools/blog_pages.py .
+      - name: Build the language pages and their blog posts
+        run: python tools/lang_pages.py .
       - name: Commit and push
         run: |
           git config user.name "Panchang bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add blog blog-recent.js sitemap.xml
+          git add blog blog-recent.js hi or bn te ta gu mr kn ml sitemap.xml
           if git diff --cached --quiet; then echo "No change"; exit 0; fi
           git commit -m "Blog pages $(TZ=Asia/Kolkata date +%F)"
           git pull --rebase origin main
